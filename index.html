@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
+<title>Germany &amp; Switzerland 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+  :root {
+    --white: #ffffff;
+    --bg: #f7f7f7;
+    --text-primary: #222222;
+    --text-secondary: #6a6a6a;
+    --text-tertiary: #929292;
+    --rausch: #ff385c;
+    --border: #dddddd;
+    --border-light: #ebebeb;
+    --surface: #f2f2f2;
+    --card-shadow: rgba(0,0,0,0.02) 0px 0px 0px 1px, rgba(0,0,0,0.04) 0px 2px 6px, rgba(0,0,0,0.1) 0px 4px 8px;
+    --flight: #ff385c;
+    --park: #f08a24;
+    --alps: #3f8f5b;
+    --summit: #3d8bd4;
+    --zurich: #9b6fbf;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', -apple-system, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.43;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--white);
+    padding: 48px 64px 40px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .hero h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.44px;
+    line-height: 1.2;
+  }
+  .hero h1 .flag { margin-right: 8px; }
+  .hero-meta {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-top: 6px;
+  }
+
+  /* QUICK SUMMARY */
+  .summary-section {
+    background: var(--white);
+    border-bottom: 1px solid var(--border-light);
+    padding: 24px 64px 28px;
+  }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+  .summary-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg);
+    border-radius: 14px;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.15s, transform 0.15s;
+  }
+  .summary-item:hover {
+    background: var(--surface);
+    transform: translateY(-1px);
+  }
+  .summary-item.complete {
+    background: #f0f0f0;
+    opacity: 0.65;
+  }
+  .summary-item.complete .summary-text { color: var(--text-secondary); }
+  .summary-item.complete::after {
+    content: "\2713";
+    margin-left: auto;
+    color: var(--text-tertiary);
+    font-weight: 700;
+    font-size: 13px;
+    align-self: center;
+  }
+  .summary-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+  .summary-text {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.4;
+  }
+  .summary-text .day-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    display: block;
+    margin-bottom: 1px;
+  }
+
+  /* MAIN */
+  .main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 64px 80px;
+  }
+
+  /* DAY CARDS */
+  .day-card {
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  .day-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 32px 0;
+  }
+  .day-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--white);
+    flex-shrink: 0;
+  }
+  .day-titles h2 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.18px;
+    line-height: 1.2;
+  }
+  .day-titles .day-date {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+  .day-city-tag {
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    color: var(--white);
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+  .day-body {
+    padding: 20px 32px 28px;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--border-light);
+    border-radius: 1px;
+  }
+  .tl-item {
+    position: relative;
+    padding-bottom: 16px;
+  }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -19px;
+    top: 7px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+  .tl-item.highlight::before {
+    background: var(--rausch);
+    box-shadow: 0 0 0 3px rgba(255,56,92,0.15);
+  }
+  .tl-time {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    margin-bottom: 2px;
+  }
+  .tl-desc {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+  .tl-desc strong {
+    font-weight: 600;
+  }
+  .tl-note {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* JOURNAL (added during/after the trip) */
+  .journal:empty { display: none; }
+  .journal {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px dashed var(--border);
+  }
+  .journal .entry {
+    font-size: 14.5px;
+    color: var(--text-primary);
+    line-height: 1.55;
+    margin-bottom: 12px;
+  }
+  .journal .entry + .entry { margin-top: -4px; }
+  .journal .video-embed {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin-top: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .journal .video-embed iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .journal .video-embed video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+  }
+  .journal .video-embed + .gallery { margin-top: 10px; }
+  .journal .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .journal .gallery img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 10px;
+    background: var(--surface);
+    cursor: zoom-in;
+  }
+  .journal .gallery.wide {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+  .journal .gallery.wide img { aspect-ratio: 4 / 3; }
+
+  /* RECAP STATES (applied when a day flips from upcoming to complete) */
+  .day-card.complete {
+    border-top: 3px solid #2c8a4a;
+  }
+  .recap-pill {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 2px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #2c8a4a;
+    background: rgba(44, 138, 74, 0.12);
+    border-radius: 999px;
+    vertical-align: 3px;
+    letter-spacing: 0.3px;
+  }
+  .now-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 28px 4px 20px;
+    color: var(--text-tertiary);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+  .now-divider::before,
+  .now-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-light);
+  }
+
+  /* LIGHTBOX */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.92);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    cursor: zoom-out;
+    padding: 24px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 8px;
+  }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 24px 64px 40px;
+    font-size: 13px;
+    color: var(--text-tertiary);
+    border-top: 1px solid var(--border-light);
+    background: var(--white);
+  }
+
+  @media (max-width: 720px) {
+    .hero { padding: 32px 20px 28px; }
+    .hero h1 { font-size: 26px; }
+    .summary-section { padding: 20px 20px 24px; }
+    .summary-grid { grid-template-columns: 1fr 1fr; }
+    .main { padding: 28px 16px 60px; }
+    .day-header { padding: 20px 20px 0; flex-wrap: wrap; }
+    .day-body { padding: 16px 20px 24px; }
+    .day-city-tag { margin-left: 0; }
+    .footer { padding: 24px 20px 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <h1><span class="flag">&#127465;&#127466;&#127464;&#127469;</span>Germany &amp; Switzerland 2026</h1>
+  <div class="hero-meta">October 9 &ndash; 17 &middot; Europa-Park &rarr; Grindelwald &rarr; Jungfraujoch &rarr; Z&uuml;rich</div>
+</div>
+
+<!-- QUICK SUMMARY -->
+<div class="summary-section">
+  <div class="summary-grid">
+    <a class="summary-item" href="#day-1"><div class="summary-dot" style="background:var(--flight)"></div><div class="summary-text"><span class="day-label">Day 1 &middot; Fri Oct 9</span>Fly IAH &rarr; FRA</div></a>
+    <a class="summary-item" href="#day-2"><div class="summary-dot" style="background:var(--park)"></div><div class="summary-text"><span class="day-label">Day 2 &middot; Sat Oct 10</span>Land in Frankfurt &middot; drive to Rust</div></a>
+    <a class="summary-item" href="#day-3"><div class="summary-dot" style="background:var(--park)"></div><div class="summary-text"><span class="day-label">Day 3 &middot; Sun Oct 11</span>Europa-Park</div></a>
+    <a class="summary-item" href="#day-4"><div class="summary-dot" style="background:var(--park)"></div><div class="summary-text"><span class="day-label">Day 4 &middot; Mon Oct 12</span>Europa-Park again</div></a>
+    <a class="summary-item" href="#day-5"><div class="summary-dot" style="background:var(--alps)"></div><div class="summary-text"><span class="day-label">Day 5 &middot; Tue Oct 13</span>Drive to Grindelwald</div></a>
+    <a class="summary-item" href="#day-6"><div class="summary-dot" style="background:var(--summit)"></div><div class="summary-text"><span class="day-label">Day 6 &middot; Wed Oct 14</span>Jungfraujoch</div></a>
+    <a class="summary-item" href="#day-7"><div class="summary-dot" style="background:var(--alps)"></div><div class="summary-text"><span class="day-label">Day 7 &middot; Thu Oct 15</span>First &middot; Cliff Walk</div></a>
+    <a class="summary-item" href="#day-8"><div class="summary-dot" style="background:var(--zurich)"></div><div class="summary-text"><span class="day-label">Day 8 &middot; Fri Oct 16</span>Train to Z&uuml;rich &middot; Lindt</div></a>
+    <a class="summary-item" href="#day-9"><div class="summary-dot" style="background:var(--flight)"></div><div class="summary-text"><span class="day-label">Day 9 &middot; Sat Oct 17</span>Fly ZRH &rarr; FRA &rarr; IAH</div></a>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- DAY 1 -->
+<div class="day-card" id="day-1">
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--flight)">D1</div>
+    <div class="day-titles">
+      <h2>Fly out</h2>
+      <div class="day-date">Friday, October 9</div>
+    </div>
+    <div class="day-city-tag" style="background:var(--flight)">Flight</div>
+  </div>
+  <div class="day-body">
+    <div class="timeline">
+      <div class="tl-item highlight"><div class="tl-time">6:20 PM</div><div class="tl-desc"><strong>Overnight flight</strong> &middot; Houston IAH &rarr; Frankfurt</div><div class="tl-note">Houston time today. Dinner, a movie and some sleep over the Atlantic</div></div>
+    </div>
+    <div class="journal"><!-- JOURNAL --></div>
+  </div>
+</div>
+<!-- /day-1 -->
+
+<!-- DAY 2 -->
+<div class="day-card" id="day-2">
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--park)">D2</div>
+    <div class="day-titles">
+      <h2>Land in Germany</h2>
+      <div class="day-date">Saturday, October 10</div>
+    </div>
+    <div class="day-city-tag" style="background:var(--park)">Rust</div>
+  </div>
+  <div class="day-body">
+    <div class="timeline">
+      <div class="tl-item highlight"><div class="tl-time">11:15 AM</div><div class="tl-desc"><strong>Land in Frankfurt</strong></div><div class="tl-note">All times from here are local, seven hours ahead of Houston</div></div>
+      <div class="tl-item"><div class="tl-time">12:45 PM</div><div class="tl-desc"><strong>Private car</strong> to Rust, about two and a half hours</div></div>
+      <div class="tl-item"><div class="tl-time">Afternoon</div><div class="tl-desc">Settle in and rest</div><div class="tl-note">Arrival day is for recharging. Rides can wait until tomorrow</div></div>
+      <div class="tl-item"><div class="tl-time">Evening</div><div class="tl-desc">Easy dinner and an early night</div></div>
+    </div>
+    <div class="journal"><!-- JOURNAL --></div>
+  </div>
+</div>
+<!-- /day-2 -->
+
+<!-- DAY 3 -->
+<div class="day-card" id="day-3">
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--park)">D3</div>
+    <div class="day-titles">
+      <h2>Europa-Park</h2>
+      <div class="day-date">Sunday, October 11</div>
+    </div>
+    <div class="day-city-tag" style="background:var(--park)">Europa-Park</div>
+  </div>
+  <div class="day-body">
+    <div class="timeline">
+      <div class="tl-item highlight"><div class="tl-time">8:15 AM</div><div class="tl-desc"><strong>Europa-Park early entry</strong></div><div class="tl-note">Selected rides open 45 minutes before the regular opening</div></div>
+      <div class="tl-item"><div class="tl-time">Morning</div><div class="tl-desc">Explore the park at our own pace</div></div>
+      <div class="tl-item"><div class="tl-time">Noon</div><div class="tl-desc">Lunch and a proper sit-down</div></div>
+      <div class="tl-item"><div class="tl-time">Afternoon</div><div class="tl-desc">More park time, with breaks whenever we want</div></div>
+    </div>
+    <div class="journal"><!-- JOURNAL --></div>
+  </div>
+</div>
+<!-- /day-3 -->
+
+<!-- DAY 4 -->
+<div class="day-card" id="day-4">
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--park)">D4</div>
+    <div class="day-titles">
+      <h2>Europa-Park, day two</h2>
+      <div class="day-date">Monday, October 12</div>
+    </div>
+    <div class="day-city-tag" style="background:var(--park)">Europa-Park</div>
+  </div>
+  <div class="day-body">
+    <div class="timeline">
+      <div class="tl-item highlight"><div class="tl-time">8:15 AM</div><div class="tl-desc"><strong>Early entry again</strong></div></div>
+      <div class="tl-item"><div class="tl-time">Morning</div><div class="tl-desc">Revisit favorites or find a new corner of the park</div></div>
+      <div class="tl-item"><div class="tl-time">Noon</div><div class="tl-desc">Lunch break</div></div>
+      <div class="tl-item"><div class="tl-time">Afternoon</div><div class="tl-desc">Keep exploring, or finish early</div><div class="tl-note">Halloween season at the park</div></div>
+    </div>
+    <div class="journal"><!-- JOURNAL --></div>
+  </div>
+</div>
+<!-- /day-4 -->
+
+<!-- DAY 5 -->
+<div class="day-card" id="day-5">
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--alps)">D5</div>
+    <div class="day-titles">
+      <h2>Hello, Alps</h2>
+      <div class="day-date">Tuesday, October 13</div>
+    </div>
+    <div class="day-city-tag" style="background:var(--alps)">Grindelwald</div>
+  </div>
+  <div class="day-body">
+    <div class="timeline">
+      <div class="tl-item highlight"><div class="tl-time">9:00 AM</div><div class="tl-desc"><strong>Car to Switzerland</strong> &middot; Rust &rarr; Grindelwald</div><div class="tl-note">About three hours through Germany and into the Swiss mountains</div></div>
+      <div class="tl-item"><div class="tl-time">Around noon</div><div class="tl-desc">Arrive in Grindelwald and have lunch</div></div>
+      <div class="tl-item"><div class="tl-time">Afternoon</div><div class="tl-desc">Village wandering and downtime under the Eiger</div></div>
+    </div>
+    <div class="journal"><!-- JOURNAL --></div>
+  </div>
+</div>
+<!-- /day-5 -->
+
+<!-- DAY 6 -->
+<div class="day-card" id="day-6">
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--summit)">D6</div>
+    <div class="day-titles">
+      <h2>Jungfraujoch</h2>
+      <div class="day-date">Wednesday, October 14</div>
+    </div>
+    <div class="day-city-tag" style="background:var(--summit)">Jungfraujoch</div>
+  </div>
+  <div class="day-body">
+    <div class="timeline">
+      <div class="tl-item highlight"><div class="tl-time">9:16 AM</div><div class="tl-desc"><strong>Eiger Express</strong> cable car</div></div>
+      <div class="tl-item"><div class="tl-time">9:43 AM</div><div class="tl-desc"><strong>Jungfrau Railway</strong> through the mountain</div></div>
+      <div class="tl-item highlight"><div class="tl-time">10:11 AM</div><div class="tl-desc"><strong>Arrive at Jungfraujoch</strong> &middot; views, Ice Palace and summit sights</div><div class="tl-note">Clouds may hide the views; we explore what is open</div></div>
+      <div class="tl-item"><div class="tl-time">1:15 PM</div><div class="tl-desc">Train back down</div></div>
+      <div class="tl-item"><div class="tl-time">Afternoon</div><div class="tl-desc">Relaxed afternoon back in Grindelwald</div></div>
+    </div>
+    <div class="journal"><!-- JOURNAL --></div>
+  </div>
+</div>
+<!-- /day-6 -->
+
+<!-- DAY 7 -->
+<div class="day-card" id="day-7">
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--alps)">D7</div>
+    <div class="day-titles">
+      <h2>First</h2>
+      <div class="day-date">Thursday, October 15</div>
+    </div>
+    <div class="day-city-tag" style="background:var(--alps)">Grindelwald</div>
+  </div>
+  <div class="day-body">
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-time">Morning</div><div class="tl-desc"><strong>Gondola up to First</strong> if it is running</div></div>
+      <div class="tl-item highlight"><div class="tl-time">Up top</div><div class="tl-desc"><strong>Views and the Cliff Walk</strong>, maybe one extra adventure</div><div class="tl-note">This is the flexible day. If the weather says stay cozy, we do that instead</div></div>
+      <div class="tl-item"><div class="tl-time">Afternoon</div><div class="tl-desc">Rest, wander or pool time</div></div>
+    </div>
+    <div class="journal"><!-- JOURNAL --></div>
+  </div>
+</div>
+<!-- /day-7 -->
+
+<!-- DAY 8 -->
+<div class="day-card" id="day-8">
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--zurich)">D8</div>
+    <div class="day-titles">
+      <h2>Train to Z&uuml;rich, then chocolate</h2>
+      <div class="day-date">Friday, October 16</div>
+    </div>
+    <div class="day-city-tag" style="background:var(--zurich)">Z&uuml;rich</div>
+  </div>
+  <div class="day-body">
+    <div class="timeline">
+      <div class="tl-item highlight"><div class="tl-time">8:47 AM</div><div class="tl-desc"><strong>Swiss trains</strong> &middot; Grindelwald &rarr; Interlaken &rarr; Z&uuml;rich</div><div class="tl-note">Arrive at Z&uuml;rich HB just before noon</div></div>
+      <div class="tl-item"><div class="tl-time">Lunch</div><div class="tl-desc">Drop bags and eat in the city</div></div>
+      <div class="tl-item highlight"><div class="tl-time">4:00 PM</div><div class="tl-desc"><strong>Lindt Home of Chocolate</strong> &middot; Kilchberg</div></div>
+      <div class="tl-item"><div class="tl-time">Evening</div><div class="tl-desc">Dinner and the last night in Switzerland</div></div>
+    </div>
+    <div class="journal"><!-- JOURNAL --></div>
+  </div>
+</div>
+<!-- /day-8 -->
+
+<!-- DAY 9 -->
+<div class="day-card" id="day-9">
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--flight)">D9</div>
+    <div class="day-titles">
+      <h2>Fly home</h2>
+      <div class="day-date">Saturday, October 17</div>
+    </div>
+    <div class="day-city-tag" style="background:var(--flight)">Flight</div>
+  </div>
+  <div class="day-body">
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-time">11:20 AM</div><div class="tl-desc"><strong>Z&uuml;rich &rarr; Frankfurt</strong></div></div>
+      <div class="tl-item highlight"><div class="tl-time">1:55 PM</div><div class="tl-desc"><strong>Frankfurt &rarr; Houston</strong></div><div class="tl-note">Land 5:50 PM Houston time. We fly west, so the clocks give us the hours back</div></div>
+    </div>
+    <div class="journal"><!-- JOURNAL --></div>
+  </div>
+</div>
+<!-- /day-9 -->
+
+</div><!-- /main -->
+
+<!-- FOOTER -->
+<div class="footer">
+  Last updated September 28, 2026
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <img src="" alt="">
+</div>
+
+<script>
+  const lb = document.getElementById('lightbox');
+  const lbImg = lb.querySelector('img');
+  document.addEventListener('click', (e) => {
+    if (e.target.matches('.gallery img')) {
+      lbImg.src = e.target.src;
+      lb.classList.add('open');
+    } else if (e.target === lb || e.target === lbImg) {
+      lb.classList.remove('open');
+      lbImg.src = '';
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { lb.classList.remove('open'); lbImg.src = ''; }
+  });
+
+  // Land returning visitors on the newest recap, unless they followed a #day-N deep link.
+  if (!location.hash) {
+    const done = document.querySelectorAll('.day-card.complete');
+    if (done.length) done[done.length - 1].scrollIntoView();
+  }
+</script>
+
+</body>
+</html>

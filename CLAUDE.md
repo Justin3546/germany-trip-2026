@@ -7,4 +7,4 @@ Mac; it edits `index.html`, `photos/dayN/` and `video/dayN.*` and commits `Day N
 - Do not hand-edit a day's journal block while the trip is running; the next publish of that day overwrites it.
 - Keep the noindex meta tags and `robots.txt`.
 - Never add a surname, anyone's age or grade, or where we are staying.
-- Keep the planned timelines as they are; they show the plan, not what happened.
+- Each published day's timeline shows what we actually did, in past tense, added and removed to match (Justin 10/16). Photos use small square tiles (no wide gallery).

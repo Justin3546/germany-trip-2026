@@ -2,774 +2,684 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
 <title>Germany &amp; Switzerland 2026</title>
+<style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+/* Layout: a full-bleed topographic map fixed behind the page; the story scrolls over its left third,
+   and the map's camera and the travel line are driven by how far you have read. */
+:root {
+  --paper: #e4e7e1;      /* sea and page ground */
+  --land: #f3f2ec;
+  --water: #b7cfd9;
+  --ink: #1d2a31;
+  --ink-2: #56636a;
+  --ink-3: #8a959a;
+  --card: rgba(250, 250, 246, 0.94);
+  --rule: #d3d7cf;
+  --border-line: #9aa49f;
+  --river: #8fb3c2;
+  --contour: #b0946f;
+  --casing: #ffffff;
+  --d-flight: #e8344f;
+  --d-park: #e57a12;
+  --d-alps: #2f8550;
+  --d-summit: #2a78c4;
+  --d-zurich: #8a5ab3;
+  --font-display: 'Archivo', 'Arial Narrow', system-ui, sans-serif;
+  --font-body: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-data: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  --col: min(480px, 40vw);
+  --shadow: 0 1px 0 rgba(29,42,49,.06), 0 10px 30px -12px rgba(29,42,49,.28);
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #0d1418; --land: #182227; --water: #0f2a37; --ink: #e5ece9; --ink-2: #a7b3b2; --ink-3: #72807f;
+  --card: rgba(20, 29, 33, 0.93); --rule: #2a373c; --border-line: #4c5b5f; --river: #24506a; --contour: #6e5c47; --casing: #0d1418;
+  --d-flight: #ff5a70; --d-park: #f39a3c; --d-alps: #4fb377; --d-summit: #5aa3ea; --d-zurich: #b388dd;
+  --shadow: 0 10px 30px -10px rgba(0,0,0,.6); color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #0d1418; --land: #182227; --water: #0f2a37; --ink: #e5ece9; --ink-2: #a7b3b2; --ink-3: #72807f;
+  --card: rgba(20, 29, 33, 0.93); --rule: #2a373c; --border-line: #4c5b5f; --river: #24506a; --contour: #6e5c47; --casing: #0d1418;
+  --d-flight: #ff5a70; --d-park: #f39a3c; --d-alps: #4fb377; --d-summit: #5aa3ea; --d-zurich: #b388dd;
+  --shadow: 0 10px 30px -10px rgba(0,0,0,.6); color-scheme: dark }
 
-  :root {
-    --white: #ffffff;
-    --bg: #f7f7f7;
-    --text-primary: #222222;
-    --text-secondary: #6a6a6a;
-    --text-tertiary: #929292;
-    --rausch: #ff385c;
-    --border: #dddddd;
-    --border-light: #ebebeb;
-    --surface: #f2f2f2;
-    --card-shadow: rgba(0,0,0,0.02) 0px 0px 0px 1px, rgba(0,0,0,0.04) 0px 2px 6px, rgba(0,0,0,0.1) 0px 4px 8px;
-    --flight: #ff385c;
-    --park: #f08a24;
-    --alps: #3f8f5b;
-    --summit: #3d8bd4;
-    --zurich: #9b6fbf;
-  }
+* { box-sizing: border-box; }
+html { scroll-behavior: auto; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+/* MAP */
+#map { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
+#map canvas, #map svg.route { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+#map svg.route { pointer-events: none; overflow: visible; }
+.lbl { font-family: var(--font-display); font-size: 12.5px; font-weight: 600; font-stretch: 85%; fill: var(--ink); paint-order: stroke; stroke: var(--land); stroke-width: 3.5px; stroke-linejoin: round; letter-spacing: .01em; }
+.lbl.city { font-size: 14px; font-weight: 700; }
+.lbl.country { font-size: 13px; font-weight: 500; font-stretch: 125%; letter-spacing: .32em; fill: var(--ink-3); stroke: none; text-transform: uppercase; }
+.lbl.water { font-family: var(--font-body); font-style: italic; font-weight: 400; fill: #4b7e93; stroke: none; font-size: 13px; }
+.lbl.peak { font-size: 11.5px; font-weight: 600; fill: var(--ink-2); }
+.lbl .elev { font-family: var(--font-data); font-weight: 400; font-size: 10px; fill: var(--ink-3); }
+.dot { fill: var(--land); stroke: var(--ink); stroke-width: 1.6; }
+.dot.done { fill: var(--ink); }
+.peakmark { fill: var(--ink-2); }
+.tip-ring { fill: none; stroke-width: 2; animation: ping 1.6s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes ping { from { opacity: .9; transform: scale(.4); } to { opacity: 0; transform: scale(2.4); } }
 
-  body {
-    font-family: 'DM Sans', -apple-system, system-ui, sans-serif;
-    background: var(--bg);
-    color: var(--text-primary);
-    -webkit-font-smoothing: antialiased;
-    line-height: 1.43;
-  }
+/* map chrome */
+.hud { position: fixed; z-index: 3; top: calc(16px + env(safe-area-inset-top, 0px)); right: calc(16px + env(safe-area-inset-right, 0px)); background: var(--card); border: 1px solid var(--rule); border-radius: 4px; padding: 10px 14px 11px; min-width: 248px; box-shadow: var(--shadow); font-family: var(--font-data); font-size: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; backdrop-filter: blur(6px); }
+.hud .when { font-family: var(--font-display); font-stretch: 112%; font-weight: 800; font-size: 15px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+.hud .when i { width: 10px; height: 10px; border-radius: 50%; background: var(--hud-c, var(--ink)); display: inline-block; transition: background .3s; }
+.hud .what { color: var(--ink); margin-top: 3px; font-size: 12.5px; min-height: 1.4em; }
+.hud .alt { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; margin-top: 8px; }
+.hud .bar { height: 4px; background: var(--rule); border-radius: 2px; overflow: hidden; }
+.hud .bar b { display: block; height: 100%; width: 0; background: var(--hud-c, var(--ink)); border-radius: 2px; }
+.hud .coord { margin-top: 4px; color: var(--ink-3); font-size: 11px; }
+.legend { position: fixed; z-index: 3; right: calc(16px + env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); background: var(--card); border: 1px solid var(--rule); border-radius: 4px; padding: 8px 12px; display: flex; flex-wrap: wrap; gap: 4px 14px; max-width: 420px; font-family: var(--font-data); font-size: 11px; color: var(--ink-2); box-shadow: var(--shadow); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.legend svg { width: 30px; height: 8px; overflow: visible; }
+.scale { position: fixed; z-index: 3; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); left: calc(var(--col) + 56px); font-family: var(--font-data); font-size: 11px; color: var(--ink-2); }
+.scale div { height: 6px; border: 1.5px solid var(--ink-2); border-top: 0; margin-bottom: 3px; }
+.postcard { position: fixed; z-index: 2; width: 200px; background: #fffdf8; padding: 8px 8px 10px; box-shadow: 0 14px 34px -14px rgba(0,0,0,.55); transform: rotate(var(--rot, 2deg)) translateY(12px); opacity: 0; transition: opacity .45s ease, transform .6s cubic-bezier(.2,.8,.2,1); cursor: zoom-in; border: 0; text-align: left; font: inherit; }
+.postcard.on { opacity: 1; transform: rotate(var(--rot, 2deg)) translateY(0); }
+.postcard img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+.postcard span { display: block; font-family: var(--font-display); font-stretch: 90%; font-weight: 600; font-size: 12px; color: #2b2b2b; margin-top: 7px; letter-spacing: .02em; }
 
-  /* HERO */
-  .hero {
-    background: var(--white);
-    padding: 48px 64px 40px;
-    border-bottom: 1px solid var(--border-light);
-  }
-  .hero h1 {
-    font-size: 32px;
-    font-weight: 700;
-    letter-spacing: -0.44px;
-    line-height: 1.2;
-  }
-  .hero h1 .flag { margin-right: 8px; }
-  .hero-meta {
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--text-secondary);
-    margin-top: 6px;
-  }
+/* STORY */
+main { position: relative; z-index: 1; width: calc(var(--col) + 32px); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: 16px; padding-block: 24px 30vh; }
+.card { background: var(--card); border: 1px solid var(--rule); border-radius: 6px; box-shadow: var(--shadow); backdrop-filter: blur(8px); padding: 26px 28px 28px; }
+.intro { min-height: calc(100vh - 48px); display: flex; flex-direction: column; justify-content: center; }
+.intro .card { padding: 34px 30px 30px; }
+.eyebrow { font-family: var(--font-data); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+h1 { font-family: var(--font-display); font-stretch: 112%; font-weight: 900; font-size: clamp(30px, 3vw, 44px); line-height: .95; letter-spacing: -.01em; margin: 10px 0 14px; text-transform: uppercase; text-wrap: balance; }
+h1 em { font-style: normal; display: block; font-stretch: 62%; font-weight: 800; color: var(--d-summit); font-size: .62em; letter-spacing: .02em; margin-top: 6px; }
+.lede { margin: 0 0 18px; color: var(--ink-2); font-size: 18px; max-width: 34ch; }
+.stops { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--rule); }
+.stops li { display: grid; grid-template-columns: 54px 14px 1fr; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--rule); font-family: var(--font-display); font-stretch: 92%; font-weight: 600; font-size: 14.5px; }
+.stops li small { font-family: var(--font-data); font-weight: 400; font-size: 11.5px; color: var(--ink-3); }
+.stops li i { width: 10px; height: 10px; border-radius: 50%; }
+.cue { margin-top: 18px; font-family: var(--font-data); font-size: 12px; color: var(--ink-3); display: flex; align-items: center; gap: 8px; }
+.cue svg { animation: bob 1.8s ease-in-out infinite; }
+@keyframes bob { 50% { transform: translateY(4px); } }
 
-  /* QUICK SUMMARY */
-  .summary-section {
-    background: var(--white);
-    border-bottom: 1px solid var(--border-light);
-    padding: 24px 64px 28px;
-  }
-  .summary-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 12px;
-  }
-  .summary-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 10px 14px;
-    background: var(--bg);
-    border-radius: 14px;
-    text-decoration: none;
-    color: inherit;
-    transition: background 0.15s, transform 0.15s;
-  }
-  .summary-item:hover {
-    background: var(--surface);
-    transform: translateY(-1px);
-  }
-  .summary-item.complete {
-    background: #f0f0f0;
-    opacity: 0.65;
-  }
-  .summary-item.complete .summary-text { color: var(--text-secondary); }
-  .summary-item.complete::after {
-    content: "\2713";
-    margin-left: auto;
-    color: var(--text-tertiary);
-    font-weight: 700;
-    font-size: 13px;
-    align-self: center;
-  }
-  .summary-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    margin-top: 5px;
-  }
-  .summary-text {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-primary);
-    line-height: 1.4;
-  }
-  .summary-text .day-label {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--text-tertiary);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    display: block;
-    margin-bottom: 1px;
-  }
+.day { padding-top: 46vh; }
+.day:first-of-type { padding-top: 20vh; }
+.day-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.badge { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: 13px; letter-spacing: .1em; color: #fff; background: var(--c); padding: 3px 8px 2px; border-radius: 2px; }
+.date { font-family: var(--font-data); font-size: 12.5px; color: var(--ink-2); letter-spacing: .02em; }
+h2 { font-family: var(--font-display); font-stretch: 105%; font-weight: 800; font-size: 30px; line-height: 1.02; margin: 12px 0 16px; letter-spacing: -.005em; text-wrap: balance; }
+.tl { list-style: none; margin: 0 0 18px; padding: 0; display: grid; gap: 0; }
+.tl li { display: grid; grid-template-columns: 92px 1fr; gap: 12px; padding: 7px 0; border-top: 1px dashed var(--rule); font-size: 15px; line-height: 1.35; }
+.tl li:last-child { border-bottom: 1px dashed var(--rule); }
+.tl time { font-family: var(--font-data); font-size: 11.5px; color: var(--ink-3); padding-top: 2px; }
+.tl strong { font-family: var(--font-display); font-stretch: 95%; font-weight: 700; font-size: 15px; }
+.tl .where { color: var(--ink-2); }
+.tl li.hi strong { color: var(--c); }
+.entry { margin: 0 0 14px; max-width: 62ch; }
+.vid { position: relative; margin: 6px 0 14px; }
+video { width: 100%; aspect-ratio: 16 / 9; max-width: 100%; display: block; background: #000; border-radius: 3px; }
+.play { position: absolute; inset: 0; width: 100%; border: 0; padding: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,.45)); border-radius: 3px; cursor: pointer; color: #fff; display: grid; place-items: center; font: inherit; }
+.play svg { width: 64px; height: 64px; padding: 16px 14px 16px 18px; border-radius: 50%; background: var(--c, var(--ink)); fill: #fff; box-shadow: 0 8px 24px -6px rgba(0,0,0,.6); transition: transform .25s cubic-bezier(.2,.8,.2,1); }
+.play:hover svg { transform: scale(1.08); }
+.play span { position: absolute; left: 12px; bottom: 9px; font-family: var(--font-display); font-stretch: 105%; font-weight: 700; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+.play:focus-visible { outline: 3px solid var(--d-summit); outline-offset: 2px; }
+.vid.on .play { display: none; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.grid button { padding: 0; border: 0; background: var(--rule); aspect-ratio: 1; overflow: hidden; border-radius: 2px; cursor: zoom-in; display: block; }
+.grid img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s cubic-bezier(.2,.8,.2,1), opacity .5s; }
+.grid button:hover img { transform: scale(1.05); }
+.grid button:focus-visible, .postcard:focus-visible { outline: 3px solid var(--d-summit); outline-offset: 2px; }
+.js .grid.pre button img { opacity: 0; transform: translateY(18px) scale(.96); }
+.grid.go button img { transition-delay: calc(var(--i) * 45ms); }
+.count { font-family: var(--font-data); font-size: 11.5px; color: var(--ink-3); margin: 0 0 8px; }
 
-  /* MAIN */
-  .main {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 40px 64px 80px;
-  }
+.finale .card { padding-bottom: 24px; }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin: 4px 0 18px; border-top: 1px solid var(--rule); }
+.stats div { padding: 12px 0 10px; border-bottom: 1px solid var(--rule); }
+.stats div:nth-child(odd) { padding-right: 12px; border-right: 1px solid var(--rule); }
+.stats div:nth-child(even) { padding-left: 14px; }
+.stats b { display: block; font-family: var(--font-display); font-stretch: 112%; font-weight: 800; font-size: 26px; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.stats small { font-family: var(--font-data); font-size: 11px; color: var(--ink-2); }
+.note { font-size: 13px; color: var(--ink-3); margin: 0; }
 
-  /* DAY CARDS */
-  .day-card {
-    background: var(--white);
-    border-radius: 20px;
-    box-shadow: var(--card-shadow);
-    margin-bottom: 24px;
-    overflow: hidden;
-  }
-  .day-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 24px 32px 0;
-  }
-  .day-badge {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--white);
-    flex-shrink: 0;
-  }
-  .day-titles h2 {
-    font-size: 20px;
-    font-weight: 600;
-    letter-spacing: -0.18px;
-    line-height: 1.2;
-  }
-  .day-titles .day-date {
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--text-secondary);
-    margin-top: 2px;
-  }
-  .day-city-tag {
-    margin-left: auto;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 4px 12px;
-    border-radius: 20px;
-    color: var(--white);
-    letter-spacing: 0.3px;
-    text-transform: uppercase;
-  }
-  .day-body {
-    padding: 20px 32px 28px;
-  }
+/* LIGHTBOX */
+.lb { position: fixed; inset: 0; z-index: 20; background: rgba(8, 12, 14, .93); display: grid; place-items: center; padding: 48px max(16px, env(safe-area-inset-left, 0px)); }
+.lb[hidden] { display: none; }
+.lb img { max-width: 100%; max-height: calc(100vh - 110px); object-fit: contain; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+.lb p { position: absolute; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); left: 0; right: 0; text-align: center; margin: 0; font-family: var(--font-data); font-size: 12px; color: #c9d1d3; }
+.lb button { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,.1); color: #fff; border: 0; width: 46px; height: 46px; border-radius: 50%; font-size: 22px; cursor: pointer; }
+.lb button:hover { background: rgba(255,255,255,.2); }
+.lb .prev { left: max(14px, env(safe-area-inset-left, 0px)); } .lb .next { right: max(14px, env(safe-area-inset-right, 0px)); }
+.lb .close { top: calc(28px + env(safe-area-inset-top, 0px)); right: max(14px, env(safe-area-inset-right, 0px)); transform: none; font-size: 18px; }
 
-  /* TIMELINE */
-  .timeline {
-    position: relative;
-    padding-left: 24px;
-  }
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 5px;
-    top: 8px;
-    bottom: 8px;
-    width: 2px;
-    background: var(--border-light);
-    border-radius: 1px;
-  }
-  .tl-item {
-    position: relative;
-    padding-bottom: 16px;
-  }
-  .tl-item:last-child { padding-bottom: 0; }
-  .tl-item::before {
-    content: '';
-    position: absolute;
-    left: -19px;
-    top: 7px;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--border);
-  }
-  .tl-item.highlight::before {
-    background: var(--rausch);
-    box-shadow: 0 0 0 3px rgba(255,56,92,0.15);
-  }
-  .tl-time {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-tertiary);
-    margin-bottom: 2px;
-  }
-  .tl-desc {
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--text-primary);
-    line-height: 1.5;
-  }
-  .tl-desc strong {
-    font-weight: 600;
-  }
-  .tl-note {
-    font-size: 13px;
-    color: var(--text-secondary);
-    margin-top: 4px;
-    line-height: 1.4;
-  }
-
-  /* JOURNAL (added during/after the trip) */
-  .journal:empty { display: none; }
-  .journal {
-    margin-top: 22px;
-    padding-top: 18px;
-    border-top: 1px dashed var(--border);
-  }
-  .journal .entry {
-    font-size: 14.5px;
-    color: var(--text-primary);
-    line-height: 1.55;
-    margin-bottom: 12px;
-  }
-  .journal .entry + .entry { margin-top: -4px; }
-  .journal .video-embed {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    margin-top: 10px;
-    border-radius: 10px;
-    overflow: hidden;
-    background: var(--surface);
-  }
-  .journal .video-embed iframe {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-  }
-  .journal .video-embed video {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    background: #000;
-  }
-  .journal .video-embed + .gallery { margin-top: 10px; }
-  .journal .gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 8px;
-    margin-top: 10px;
-  }
-  .journal .gallery img {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    border-radius: 10px;
-    background: var(--surface);
-    cursor: zoom-in;
-  }
-
-  /* RECAP STATES (applied when a day flips from upcoming to complete) */
-  .day-card.complete {
-    border-top: 3px solid #2c8a4a;
-  }
-  .recap-pill {
-    display: inline-block;
-    margin-left: 10px;
-    padding: 2px 10px;
-    font-size: 11px;
-    font-weight: 600;
-    color: #2c8a4a;
-    background: rgba(44, 138, 74, 0.12);
-    border-radius: 999px;
-    vertical-align: 3px;
-    letter-spacing: 0.3px;
-  }
-  .now-divider {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin: 28px 4px 20px;
-    color: var(--text-tertiary);
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-  }
-  .now-divider::before,
-  .now-divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border-light);
-  }
-
-  /* LIGHTBOX */
-  .lightbox {
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.92);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 100;
-    cursor: zoom-out;
-    padding: 24px;
-  }
-  .lightbox.open { display: flex; }
-  .lightbox img {
-    max-width: 100%;
-    max-height: 100%;
-    border-radius: 8px;
-  }
-
-  /* FOOTER */
-  .footer {
-    text-align: center;
-    padding: 24px 64px 40px;
-    font-size: 13px;
-    color: var(--text-tertiary);
-    border-top: 1px solid var(--border-light);
-    background: var(--white);
-  }
-
-  @media (max-width: 720px) {
-    .hero { padding: 32px 20px 28px; }
-    .hero h1 { font-size: 26px; }
-    .summary-section { padding: 20px 20px 24px; }
-    .summary-grid { grid-template-columns: 1fr 1fr; }
-    .main { padding: 28px 16px 60px; }
-    .day-header { padding: 20px 20px 0; flex-wrap: wrap; }
-    .day-body { padding: 16px 20px 24px; }
-    .day-city-tag { margin-left: 0; }
-    .footer { padding: 24px 20px 32px; }
-  }
+/* PHONE: map pinned to the top, story below it */
+@media (max-width: 760px) {
+  :root { --col: 100vw; }
+  #map { bottom: auto; height: 46vh; border-bottom: 1px solid var(--rule); z-index: 2; } /* the story slides under the map, not over it */
+  main { width: 100%; padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-top: calc(46vh + 16px); }
+  .intro { min-height: 0; }
+  .day, .day:first-of-type { padding-top: 34vh; }
+  .card { padding: 20px 18px 22px; backdrop-filter: none; background: var(--land); }
+  .hud { top: calc(8px + env(safe-area-inset-top, 0px)); right: max(8px, env(safe-area-inset-right, 0px)); min-width: 0; width: 196px; padding: 7px 10px; font-size: 11px; }
+  .hud .when { font-size: 12.5px; } .hud .coord { display: none; }
+  .legend, .postcard { display: none; }
+  .scale { left: max(12px, env(safe-area-inset-left, 0px)); bottom: auto; top: calc(46vh - 30px); }
+  .tl li { grid-template-columns: 74px 1fr; }
+  h2 { font-size: 25px; }
+  .stats b { font-size: 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tip-ring, .cue svg { animation: none; }
+  .js .grid.pre button img { opacity: 1; transform: none; }
+  .postcard { transition: opacity .2s; }
+}
 </style>
 </head>
 <body>
 
-<!-- HERO -->
-<div class="hero">
-  <h1><span class="flag">&#127465;&#127466;&#127464;&#127469;</span>Germany &amp; Switzerland 2026</h1>
-  <div class="hero-meta">October 9 &ndash; 17 &middot; Europa-Park &rarr; Grindelwald &rarr; Jungfraujoch &rarr; Z&uuml;rich</div>
+<div id="map" aria-hidden="true">
+  <canvas id="cv"></canvas>
+  <svg class="route" id="ov"></svg>
+</div>
+<div class="hud" id="hud" aria-live="off">
+  <div class="when"><i></i><span id="h-when">Oct 9 – 17, 2026</span></div>
+  <div class="what" id="h-what">Houston · Frankfurt · Alps · Zürich</div>
+  <div class="alt"><span>ELEV</span><div class="bar"><b id="h-bar"></b></div><span id="h-elev">–</span></div>
+  <div class="coord" id="h-coord">&nbsp;</div>
+</div>
+<div class="scale" id="scale" aria-hidden="true"><div></div><span></span></div>
+<div class="legend" id="legend" aria-hidden="true"></div>
+<button class="postcard" id="pc" type="button" aria-label="Open photo"><img src="media/d1/img4.jpg" alt=""><span></span></button>
+
+<main id="story"></main>
+
+<div class="lb" id="lb" hidden role="dialog" aria-label="Photo viewer">
+  <img src="media/d1/img4.jpg" alt="">
+  <button class="prev" type="button" aria-label="Previous photo">&#8249;</button>
+  <button class="next" type="button" aria-label="Next photo">&#8250;</button>
+  <button class="close" type="button" aria-label="Close">&#10005;</button>
+  <p></p>
 </div>
 
-<!-- QUICK SUMMARY -->
-<div class="summary-section">
-  <div class="summary-grid">
-    <a class="summary-item complete" href="#day-1"><div class="summary-dot" style="background:var(--flight)"></div><div class="summary-text"><span class="day-label">Day 1 &middot; Fri&ndash;Sat Oct 9&ndash;10</span>Houston &rarr; Frankfurt &rarr; Rust</div></a>
-    <a class="summary-item complete" href="#day-2"><div class="summary-dot" style="background:var(--park)"></div><div class="summary-text"><span class="day-label">Day 2 &middot; Sun Oct 11</span>Europa-Park</div></a>
-    <a class="summary-item complete" href="#day-3"><div class="summary-dot" style="background:var(--park)"></div><div class="summary-text"><span class="day-label">Day 3 &middot; Mon Oct 12</span>Europa-Park again</div></a>
-    <a class="summary-item complete" href="#day-4"><div class="summary-dot" style="background:var(--alps)"></div><div class="summary-text"><span class="day-label">Day 4 &middot; Tue Oct 13</span>Drive to Grindelwald</div></a>
-    <a class="summary-item complete" href="#day-5"><div class="summary-dot" style="background:var(--summit)"></div><div class="summary-text"><span class="day-label">Day 5 &middot; Wed Oct 14</span>Jungfraujoch</div></a>
-    <a class="summary-item complete" href="#day-6"><div class="summary-dot" style="background:var(--alps)"></div><div class="summary-text"><span class="day-label">Day 6 &middot; Thu Oct 15</span>First &middot; Cliff Walk</div></a>
-    <a class="summary-item complete" href="#day-7"><div class="summary-dot" style="background:var(--zurich)"></div><div class="summary-text"><span class="day-label">Day 7 &middot; Fri Oct 16</span>Train to Z&uuml;rich &middot; Lindt</div></a>
-    <a class="summary-item complete" href="#day-8"><div class="summary-dot" style="background:var(--flight)"></div><div class="summary-text"><span class="day-label">Day 8 &middot; Sat Oct 17</span>Fly ZRH &rarr; FRA &rarr; IAH</div></a>
-  </div>
-</div>
-
-<!-- MAIN -->
-<div class="main">
-
-<!-- DAY 1 -->
-<div class="day-card complete" id="day-1">
-  <div class="day-header">
-    <div class="day-badge" style="background:var(--flight)">D1</div>
-    <div class="day-titles">
-      <h2>Houston to Europa-Park<span class="recap-pill">&#10003; Recap</span></h2>
-      <div class="day-date">Friday, October 9 to Saturday, October 10</div>
-    </div>
-    <div class="day-city-tag" style="background:var(--park)">Rust</div>
-  </div>
-  <div class="day-body">
-    <div class="timeline">
-      <div class="tl-item highlight"><div class="tl-time">Fri evening</div><div class="tl-desc"><strong>Overnight flight</strong> Houston to Frankfurt</div></div>
-      <div class="tl-item"><div class="tl-time">Saturday</div><div class="tl-desc"><strong>Private car</strong> Frankfurt to Europa-Park, Rust</div></div>
-    </div>
-    <div class="journal">
-      <p class="entry">Made it to Germany! Overnight flight from Houston to Frankfurt where Ricky and I actually got some sleep, then a car ride down to Europa-Park. We spent the afternoon exploring the hotel, which has a giant sea monster skeleton hanging in the atrium and a polar bear in the hallway, before dinner.</p>
-      <div class="video-embed">
-        <video controls playsinline preload="none" poster="video/day1.jpg?v=10102220">
-          <source src="video/day1.mp4?v=10102220" type="video/mp4">
-        </video>
-      </div>
-      <div class="gallery">
-        <img src="photos/day1/img1.jpg?v=10102220" alt="" loading="lazy">
-        <img src="photos/day1/img2.jpg?v=10102220" alt="" loading="lazy">
-        <img src="photos/day1/img3.jpg?v=10102220" alt="" loading="lazy">
-        <img src="photos/day1/img4.jpg?v=10102220" alt="" loading="lazy">
-        <img src="photos/day1/img5.jpg?v=10102220" alt="" loading="lazy">
-        <img src="photos/day1/img6.jpg?v=10102220" alt="" loading="lazy">
-        <img src="photos/day1/img7.jpg?v=10102220" alt="" loading="lazy">
-        <img src="photos/day1/img8.jpg?v=10102220" alt="" loading="lazy">
-        <img src="photos/day1/img9.jpg?v=10102220" alt="" loading="lazy">
-        <img src="photos/day1/img10.jpg?v=10102220" alt="" loading="lazy">
-        <img src="photos/day1/img11.jpg?v=10102220" alt="" loading="lazy">
-        <img src="photos/day1/img12.jpg?v=10102220" alt="" loading="lazy">
-        <img src="photos/day1/img13.jpg?v=10102220" alt="" loading="lazy">
-        <img src="photos/day1/img14.jpg?v=10102220" alt="" loading="lazy">
-      </div>
-    </div>
-  </div>
-</div>
-<!-- /day-1 -->
-
-<!-- DAY 2 -->
-<div class="day-card complete" id="day-2">
-  <div class="day-header">
-    <div class="day-badge" style="background:var(--park)">D2</div>
-    <div class="day-titles">
-      <h2>Europa-Park<span class="recap-pill">&#10003; Recap</span></h2>
-      <div class="day-date">Sunday, October 11</div>
-    </div>
-    <div class="day-city-tag" style="background:var(--park)">Europa-Park</div>
-  </div>
-  <div class="day-body">
-    <div class="timeline">
-      <div class="tl-item highlight"><div class="tl-time">Morning</div><div class="tl-desc"><strong>Roller coasters</strong> Europa-Park: Blue Fire, Wodan, Silver Star, Euro-Mir, Matterhorn-Blitz, Voltron, Pegasus</div></div>
-      <div class="tl-item highlight"><div class="tl-time">Afternoon</div><div class="tl-desc"><strong>Surpr&#x27;Ice ice show</strong> Europa-Park</div></div>
-      <div class="tl-item"><div class="tl-time">Afternoon</div><div class="tl-desc"><strong>Voletarium and Poseidon</strong> Europa-Park</div></div>
-    </div>
-    <div class="journal">
-      <p class="entry">Full day at Europa-Park. We rode Blue Fire, Wodan, Silver Star, Euro-Mir, Matterhorn-Blitz, Voltron and Pegasus before lunch, and Silver Star was really good, though Cora sat that one out because it went up too high. After lunch we saw the vampire ice show, then Ricky talked us into the Voletarium and Poseidon before we took the park train out and the shuttle back to the hotel around 3. Everybody was tired.</p>
-      <div class="video-embed">
-        <video controls playsinline preload="none" poster="video/day2.jpg?v=10111814">
-          <source src="video/day2.mp4?v=10111814" type="video/mp4">
-        </video>
-      </div>
-      <div class="gallery">
-        <img src="photos/day2/img1.jpg?v=10111814" alt="" loading="lazy">
-        <img src="photos/day2/img2.jpg?v=10111814" alt="" loading="lazy">
-        <img src="photos/day2/img3.jpg?v=10111814" alt="" loading="lazy">
-        <img src="photos/day2/img4.jpg?v=10111814" alt="" loading="lazy">
-        <img src="photos/day2/img5.jpg?v=10111814" alt="" loading="lazy">
-        <img src="photos/day2/img6.jpg?v=10111814" alt="" loading="lazy">
-        <img src="photos/day2/img7.jpg?v=10111814" alt="" loading="lazy">
-        <img src="photos/day2/img8.jpg?v=10111814" alt="" loading="lazy">
-        <img src="photos/day2/img9.jpg?v=10111814" alt="" loading="lazy">
-        <img src="photos/day2/img10.jpg?v=10111814" alt="" loading="lazy">
-      </div>
-    </div>
-  </div>
-</div>
-<!-- /day-2 -->
-
-<!-- DAY 3 -->
-<div class="day-card complete" id="day-3">
-  <div class="day-header">
-    <div class="day-badge" style="background:var(--park)">D3</div>
-    <div class="day-titles">
-      <h2>Europa-Park, day two<span class="recap-pill">&#10003; Recap</span></h2>
-      <div class="day-date">Monday, October 12</div>
-    </div>
-    <div class="day-city-tag" style="background:var(--park)">Europa-Park</div>
-  </div>
-  <div class="day-body">
-    <div class="timeline">
-      <div class="tl-item"><div class="tl-time">Morning</div><div class="tl-desc"><strong>Rides and the park train</strong> Europa-Park</div></div>
-      <div class="tl-item highlight"><div class="tl-time">Afternoon</div><div class="tl-desc"><strong>Water park and VR snorkeling</strong> Rulantica</div></div>
-    </div>
-    <div class="journal">
-      <p class="entry">Second day at Europa-Park. We took the shuttle over early, and covered all the rides by mid morning. In the afternoon we switched to Rulantica, the indoor water park, where the kids tried VR snorkeling and did even more rides. We finished with a fancy dinner.</p>
-      <div class="video-embed">
-        <video controls playsinline preload="none" poster="video/day3.jpg?v=10121920">
-          <source src="video/day3.mp4?v=10121920" type="video/mp4">
-        </video>
-      </div>
-      <div class="gallery">
-        <img src="photos/day3/img1.jpg?v=10121920" alt="" loading="lazy">
-        <img src="photos/day3/img2.jpg?v=10121920" alt="" loading="lazy">
-        <img src="photos/day3/img3.jpg?v=10121920" alt="" loading="lazy">
-        <img src="photos/day3/img4.jpg?v=10121920" alt="" loading="lazy">
-        <img src="photos/day3/img5.jpg?v=10121920" alt="" loading="lazy">
-        <img src="photos/day3/img6.jpg?v=10121920" alt="" loading="lazy">
-        <img src="photos/day3/img7.jpg?v=10121920" alt="" loading="lazy">
-        <img src="photos/day3/img8.jpg?v=10121920" alt="" loading="lazy">
-        <img src="photos/day3/img9.jpg?v=10121920" alt="" loading="lazy">
-        <img src="photos/day3/img10.jpg?v=10121920" alt="" loading="lazy">
-        <img src="photos/day3/img11.jpg?v=10121920" alt="" loading="lazy">
-        <img src="photos/day3/img12.jpg?v=10121920" alt="" loading="lazy">
-        <img src="photos/day3/img13.jpg?v=10121920" alt="" loading="lazy">
-        <img src="photos/day3/img14.jpg?v=10121920" alt="" loading="lazy">
-        <img src="photos/day3/img15.jpg?v=10121920" alt="" loading="lazy">
-      </div>
-    </div>
-  </div>
-</div>
-<!-- /day-3 -->
-
-<!-- DAY 4 -->
-<div class="day-card complete" id="day-4">
-  <div class="day-header">
-    <div class="day-badge" style="background:var(--alps)">D4</div>
-    <div class="day-titles">
-      <h2>Hello, Alps<span class="recap-pill">&#10003; Recap</span></h2>
-      <div class="day-date">Tuesday, October 13</div>
-    </div>
-    <div class="day-city-tag" style="background:var(--alps)">Grindelwald</div>
-  </div>
-  <div class="day-body">
-    <div class="timeline">
-      <div class="tl-item highlight"><div class="tl-time">Morning</div><div class="tl-desc"><strong>Drive to Switzerland</strong> Rust to Grindelwald</div></div>
-      <div class="tl-item"><div class="tl-time">Afternoon</div><div class="tl-desc"><strong>Cable car</strong> Grindelwald to Pfingstegg</div></div>
-      <div class="tl-item highlight"><div class="tl-time">Afternoon</div><div class="tl-desc"><strong>Mountain toboggan</strong> Pfingstegg</div></div>
-      <div class="tl-item highlight"><div class="tl-time">Afternoon</div><div class="tl-desc"><strong>Fly-Line zipline</strong> Pfingstegg</div></div>
-    </div>
-    <div class="journal">
-      <p class="entry">A car drove us from Europa-Park to Grindelwald in the Swiss Alps this morning, and we finally got our first look at the snowy peaks. In the afternoon we took the cable car up to Pfingstegg and did the mountain toboggan and the Fly-Line zipline at the top. The kids also found a rope swing and a playground zip line. We finished the afternoon in bathrobes back at the hotel.</p>
-      <div class="video-embed">
-        <video controls playsinline preload="none" poster="video/day4.jpg?v=10131902">
-          <source src="video/day4.mp4?v=10131902" type="video/mp4">
-        </video>
-      </div>
-      <div class="gallery">
-        <img src="photos/day4/img1.jpg?v=10131902" alt="" loading="lazy">
-        <img src="photos/day4/img2.jpg?v=10131902" alt="" loading="lazy">
-        <img src="photos/day4/img3.jpg?v=10131902" alt="" loading="lazy">
-        <img src="photos/day4/img4.jpg?v=10131902" alt="" loading="lazy">
-        <img src="photos/day4/img5.jpg?v=10131902" alt="" loading="lazy">
-        <img src="photos/day4/img6.jpg?v=10131902" alt="" loading="lazy">
-        <img src="photos/day4/img7.jpg?v=10131902" alt="" loading="lazy">
-        <img src="photos/day4/img8.jpg?v=10131902" alt="" loading="lazy">
-        <img src="photos/day4/img9.jpg?v=10131902" alt="" loading="lazy">
-        <img src="photos/day4/img10.jpg?v=10131902" alt="" loading="lazy">
-        <img src="photos/day4/img11.jpg?v=10131902" alt="" loading="lazy">
-        <img src="photos/day4/img12.jpg?v=10131902" alt="" loading="lazy">
-      </div>
-    </div>
-  </div>
-</div>
-<!-- /day-4 -->
-
-<!-- DAY 5 -->
-<div class="day-card complete" id="day-5">
-  <div class="day-header">
-    <div class="day-badge" style="background:var(--summit)">D5</div>
-    <div class="day-titles">
-      <h2>Jungfraujoch<span class="recap-pill">&#10003; Recap</span></h2>
-      <div class="day-date">Wednesday, October 14</div>
-    </div>
-    <div class="day-city-tag" style="background:var(--summit)">Jungfraujoch</div>
-  </div>
-  <div class="day-body">
-    <div class="timeline">
-      <div class="tl-item"><div class="tl-time">8:45 AM</div><div class="tl-desc"><strong>Eiger Express gondola</strong> Grindelwald Terminal to Eigergletscher</div></div>
-      <div class="tl-item"><div class="tl-time">Morning</div><div class="tl-desc"><strong>Jungfrau Railway</strong> Eigergletscher to Jungfraujoch, with a stop at Eismeer</div></div>
-      <div class="tl-item highlight"><div class="tl-time">Morning</div><div class="tl-desc"><strong>Snow and the Ice Palace</strong> Jungfraujoch, Top of Europe</div></div>
-      <div class="tl-item"><div class="tl-time">Afternoon</div><div class="tl-desc"><strong>Indoor swimming</strong> Sportzentrum Grindelwald</div></div>
-    </div>
-    <div class="journal">
-      <p class="entry">Great day up at the Jungfraujoch, the Top of Europe. We took the Eiger Express gondola up from Grindelwald, then the train through the mountain with a quick stop at the Eismeer windows, and the kids played in the snow at the top making snowballs and snow angels. We also walked through the Ice Palace and got a new cap for Cora.</p>
-      <p class="entry">In the afternoon we swam in the indoor pool at the Sportzentrum in the village, then had room service for dinner at the hotel.</p>
-      <div class="video-embed">
-        <video controls playsinline preload="none" poster="video/day5.jpg?v=10142012">
-          <source src="video/day5.mp4?v=10142012" type="video/mp4">
-        </video>
-      </div>
-      <div class="gallery">
-        <img src="photos/day5/img1.jpg?v=10142012" alt="" loading="lazy">
-        <img src="photos/day5/img2.jpg?v=10142012" alt="" loading="lazy">
-        <img src="photos/day5/img3.jpg?v=10142012" alt="" loading="lazy">
-        <img src="photos/day5/img4.jpg?v=10142012" alt="" loading="lazy">
-        <img src="photos/day5/img5.jpg?v=10142012" alt="" loading="lazy">
-        <img src="photos/day5/img6.jpg?v=10142012" alt="" loading="lazy">
-        <img src="photos/day5/img7.jpg?v=10142012" alt="" loading="lazy">
-        <img src="photos/day5/img8.jpg?v=10142012" alt="" loading="lazy">
-        <img src="photos/day5/img9.jpg?v=10142012" alt="" loading="lazy">
-        <img src="photos/day5/img10.jpg?v=10142012" alt="" loading="lazy">
-        <img src="photos/day5/img11.jpg?v=10142012" alt="" loading="lazy">
-        <img src="photos/day5/img12.jpg?v=10142012" alt="" loading="lazy">
-        <img src="photos/day5/img13.jpg?v=10142012" alt="" loading="lazy">
-        <img src="photos/day5/img14.jpg?v=10142012" alt="" loading="lazy">
-        <img src="photos/day5/img15.jpg?v=10142012" alt="" loading="lazy">
-        <img src="photos/day5/img16.jpg?v=10142012" alt="" loading="lazy">
-        <img src="photos/day5/img17.jpg?v=10142012" alt="" loading="lazy">
-        <img src="photos/day5/img18.jpg?v=10142012" alt="" loading="lazy">
-        <img src="photos/day5/img19.jpg?v=10142012" alt="" loading="lazy">
-        <img src="photos/day5/img20.jpg?v=10142012" alt="" loading="lazy">
-        <img src="photos/day5/img21.jpg?v=10142012" alt="" loading="lazy">
-      </div>
-    </div>
-  </div>
-</div>
-<!-- /day-5 -->
-
-<!-- DAY 6 -->
-<div class="day-card complete" id="day-6">
-  <div class="day-header">
-    <div class="day-badge" style="background:var(--alps)">D6</div>
-    <div class="day-titles">
-      <h2>First<span class="recap-pill">&#10003; Recap</span></h2>
-      <div class="day-date">Thursday, October 15</div>
-    </div>
-    <div class="day-city-tag" style="background:var(--alps)">Grindelwald</div>
-  </div>
-  <div class="day-body">
-    <div class="timeline">
-      <div class="tl-item"><div class="tl-time">Morning</div><div class="tl-desc"><strong>Gondola</strong> Grindelwald to First</div></div>
-      <div class="tl-item highlight"><div class="tl-time">Morning</div><div class="tl-desc"><strong>Cliff Walk</strong> First</div></div>
-      <div class="tl-item"><div class="tl-time">Late morning</div><div class="tl-desc"><strong>Hike toward Bachalpsee</strong> First</div></div>
-      <div class="tl-item"><div class="tl-time">Midday</div><div class="tl-desc"><strong>First Flyer</strong> First to Schreckfeld</div></div>
-      <div class="tl-item highlight"><div class="tl-time">Early afternoon</div><div class="tl-desc"><strong>First Glider</strong> First</div></div>
-      <div class="tl-item"><div class="tl-time">Evening</div><div class="tl-desc"><strong>Fondue dinner</strong> Grindelwald</div></div>
-    </div>
-    <div class="journal">
-      <p class="entry">Big day up at First. We took the gondola up and did the Cliff Walk, but skipped the line out to the very edge because it was really long. Then we hiked about a mile toward Bachalpsee before the kids got tired and we turned back, had lunch at the top, and did the First Flyer (Ricky&#x27;s pick, which looks scary but was a lot of fun) and the First Glider, which was awesome.</p>
-      <p class="entry">Back at the hotel we rested, then hit the pool and had fondue for dinner.</p>
-      <div class="video-embed">
-        <video controls playsinline preload="none" poster="video/day6.jpg?v=10151910">
-          <source src="video/day6.mp4?v=10151910" type="video/mp4">
-        </video>
-      </div>
-      <div class="gallery">
-        <img src="photos/day6/img1.jpg?v=10151910" alt="" loading="lazy">
-        <img src="photos/day6/img2.jpg?v=10151910" alt="" loading="lazy">
-        <img src="photos/day6/img3.jpg?v=10151910" alt="" loading="lazy">
-        <img src="photos/day6/img4.jpg?v=10151910" alt="" loading="lazy">
-        <img src="photos/day6/img5.jpg?v=10151910" alt="" loading="lazy">
-        <img src="photos/day6/img6.jpg?v=10151910" alt="" loading="lazy">
-        <img src="photos/day6/img7.jpg?v=10151910" alt="" loading="lazy">
-        <img src="photos/day6/img8.jpg?v=10151910" alt="" loading="lazy">
-        <img src="photos/day6/img9.jpg?v=10151910" alt="" loading="lazy">
-        <img src="photos/day6/img10.jpg?v=10151910" alt="" loading="lazy">
-        <img src="photos/day6/img11.jpg?v=10151910" alt="" loading="lazy">
-        <img src="photos/day6/img12.jpg?v=10151910" alt="" loading="lazy">
-        <img src="photos/day6/img13.jpg?v=10151910" alt="" loading="lazy">
-        <img src="photos/day6/img14.jpg?v=10151910" alt="" loading="lazy">
-        <img src="photos/day6/img15.jpg?v=10151910" alt="" loading="lazy">
-        <img src="photos/day6/img16.jpg?v=10151910" alt="" loading="lazy">
-        <img src="photos/day6/img17.jpg?v=10151910" alt="" loading="lazy">
-        <img src="photos/day6/img18.jpg?v=10151910" alt="" loading="lazy">
-        <img src="photos/day6/img19.jpg?v=10151910" alt="" loading="lazy">
-        <img src="photos/day6/img20.jpg?v=10151910" alt="" loading="lazy">
-        <img src="photos/day6/img21.jpg?v=10151910" alt="" loading="lazy">
-        <img src="photos/day6/img22.jpg?v=10151910" alt="" loading="lazy">
-        <img src="photos/day6/img23.jpg?v=10151910" alt="" loading="lazy">
-      </div>
-    </div>
-  </div>
-</div>
-<!-- /day-6 -->
-
-<!-- DAY 7 -->
-<div class="day-card complete" id="day-7">
-  <div class="day-header">
-    <div class="day-badge" style="background:var(--zurich)">D7</div>
-    <div class="day-titles">
-      <h2>Train to Z&uuml;rich, then chocolate<span class="recap-pill">&#10003; Recap</span></h2>
-      <div class="day-date">Friday, October 16</div>
-    </div>
-    <div class="day-city-tag" style="background:var(--zurich)">Z&uuml;rich</div>
-  </div>
-  <div class="day-body">
-    <div class="timeline">
-      <div class="tl-item"><div class="tl-time">Morning</div><div class="tl-desc"><strong>**Train to Zürich**</strong> Grindelwald to Zürich</div></div>
-      <div class="tl-item"><div class="tl-time">3:15 PM</div><div class="tl-desc"><strong>**Tram and bus**</strong> Zürich to Kilchberg</div></div>
-      <div class="tl-item highlight"><div class="tl-time">3:30 PM</div><div class="tl-desc"><strong>**Lindt Home of Chocolate**</strong> Kilchberg</div></div>
-    </div>
-    <div class="journal">
-      <p class="entry">Last travel day! We took the train from Grindelwald to Zürich this morning and all the train went great. After lunch at the hotel, we took the tram and a bus out to the Lindt Home of Chocolate. The kids absolutely loved it and came out completely full of chocolate.</p>
-      <p class="entry">Everyone was tired and we still had to pack for the flight home, so we ordered in for dinner.</p>
-      <div class="video-embed">
-        <video controls playsinline preload="none" poster="video/day7.jpg?v=10170412">
-          <source src="video/day7.mp4?v=10170412" type="video/mp4">
-        </video>
-      </div>
-      <div class="gallery">
-        <img src="photos/day7/img1.jpg?v=10170412" alt="" loading="lazy">
-        <img src="photos/day7/img2.jpg?v=10170412" alt="" loading="lazy">
-        <img src="photos/day7/img3.jpg?v=10170412" alt="" loading="lazy">
-        <img src="photos/day7/img4.jpg?v=10170412" alt="" loading="lazy">
-        <img src="photos/day7/img5.jpg?v=10170412" alt="" loading="lazy">
-        <img src="photos/day7/img6.jpg?v=10170412" alt="" loading="lazy">
-        <img src="photos/day7/img7.jpg?v=10170412" alt="" loading="lazy">
-        <img src="photos/day7/img8.jpg?v=10170412" alt="" loading="lazy">
-        <img src="photos/day7/img9.jpg?v=10170412" alt="" loading="lazy">
-        <img src="photos/day7/img10.jpg?v=10170412" alt="" loading="lazy">
-        <img src="photos/day7/img11.jpg?v=10170412" alt="" loading="lazy">
-        <img src="photos/day7/img12.jpg?v=10170412" alt="" loading="lazy">
-      </div>
-    </div>
-  </div>
-</div>
-<!-- /day-7 -->
-
-<!-- DAY 8 -->
-<div class="day-card complete" id="day-8">
-  <div class="day-header">
-    <div class="day-badge" style="background:var(--flight)">D8</div>
-    <div class="day-titles">
-      <h2>Fly home<span class="recap-pill">&#10003; Recap</span></h2>
-      <div class="day-date">Saturday, October 17</div>
-    </div>
-    <div class="day-city-tag" style="background:var(--flight)">Flight</div>
-  </div>
-  <div class="day-body">
-    <div class="timeline">
-      <div class="tl-item"><div class="tl-time">Morning</div><div class="tl-desc"><strong>**Flight to Frankfurt**</strong> Zürich Airport to Frankfurt</div></div>
-      <div class="tl-item"><div class="tl-time">Midday</div><div class="tl-desc"><strong>**Connection**</strong> Frankfurt Airport</div></div>
-      <div class="tl-item highlight"><div class="tl-time">Afternoon</div><div class="tl-desc"><strong>**Long United flight home**</strong> Frankfurt to Houston</div></div>
-      <div class="tl-item highlight"><div class="tl-time">Evening</div><div class="tl-desc"><strong>**Landing and passport control**</strong> Houston Bush Intercontinental Airport</div></div>
-    </div>
-    <div class="journal">
-      <p class="entry">Travel day home. Quick flight back to Frankfurt and a very long (10+ hours!) flight back to Houston. Happy to be home.</p>
-      <div class="gallery">
-        <img src="photos/day8/img1.jpg?v=10181909" alt="" loading="lazy">
-        <img src="photos/day8/img2.jpg?v=10181909" alt="" loading="lazy">
-        <img src="photos/day8/img3.jpg?v=10181909" alt="" loading="lazy">
-      </div>
-    </div>
-  </div>
-</div>
-<!-- /day-8 -->
-
-</div><!-- /main -->
-
-<!-- FOOTER -->
-<div class="footer">
-  Last updated October 18, 2026
-</div>
-
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" aria-hidden="true">
-  <img src="" alt="">
-</div>
-
+<script src="geo.js"></script>
 <script>
-  const lb = document.getElementById('lightbox');
-  const lbImg = lb.querySelector('img');
-  document.addEventListener('click', (e) => {
-    if (e.target.matches('.gallery img')) {
-      lbImg.src = e.target.src;
-      lb.classList.add('open');
-    } else if (e.target === lb || e.target === lbImg) {
-      lb.classList.remove('open');
-      lbImg.src = '';
+document.documentElement.classList.add('js');
+if (!location.hash) { history.scrollRestoration = 'manual'; scrollTo(0, 0); } // always open at the top
+
+/* ---------- projection: web mercator, world = 256000 units ---------- */
+const P = (lon, lat) => [ (lon + 180) / 360 * 256000,
+  (1 - Math.log(Math.tan(lat * Math.PI / 180) + 1 / Math.cos(lat * Math.PI / 180)) / Math.PI) / 2 * 256000 ];
+const metersPerUnit = (lat) => 40075016 / 256000 * Math.cos(lat * Math.PI / 180);
+
+/* ---------- places ---------- */
+const PL = {
+  IAH: [-95.3414, 29.9902, 30], FRA: [8.5622, 50.0379, 111], RUST: [7.7215, 48.266, 165],
+  GRI: [8.0337, 46.6243, 1034], PFV: [8.0436, 46.6205, 1050], PFI: [8.0570, 46.6118, 1391],
+  TER: [8.0196, 46.6185, 943], EIG: [7.9746, 46.5752, 2320], EIS: [7.9966, 46.5634, 3160], JOCH: [7.9845, 46.5474, 3454],
+  FIV: [8.0381, 46.6253, 1050], BORT: [8.0599, 46.6370, 1570], SCH: [8.0641, 46.6497, 1955], FIRST: [8.0545, 46.6595, 2168], HIKE: [8.0405, 46.6648, 2240],
+  INT: [7.8691, 46.6905, 568], SPZ: [7.6807, 46.6863, 628], THUN: [7.6299, 46.7548, 560], BERN: [7.4391, 46.949, 540],
+  ZHB: [8.5403, 47.3779, 408], LINDT: [8.5487, 47.3225, 430], ZRH: [8.5555, 47.4582, 432],
+};
+const elev = (p) => p[2];
+
+/* label specs: [text, lon, lat, class, minSpanKm, maxSpanKm, anchor, sub] */
+const LABELS = [
+  ['United States', -98, 37, 'country', 2500, 1e9, 'm'], ['Atlantic Ocean', -42, 38, 'water', 2500, 1e9, 'm'],
+  ['Germany', 10.0, 50.6, 'country', 160, 2400, 'm'], ['France', 6.0, 48.3, 'country', 160, 2400, 'm'],
+  ['Switzerland', 8.3, 46.95, 'country', 150, 1400, 'm'], ['Italy', 9.4, 45.75, 'country', 200, 1400, 'm'], ['Austria', 10.9, 47.35, 'country', 220, 1400, 'm'],
+  ['Houston', ...PL.IAH.slice(0, 2), 'city', 1500, 1e9, 'r'], ['Frankfurt', ...PL.FRA.slice(0, 2), 'city', 80, 1e9, 'r'],
+  ['Europa-Park', ...PL.RUST.slice(0, 2), 'city', 15, 900, 'l'], ['Basel', 7.588, 47.56, 'plain', 100, 700, 'l'], ['Bern', ...PL.BERN.slice(0, 2), 'plain', 60, 700, 'l'],
+  ['Zürich', ...PL.ZHB.slice(0, 2), 'city', 5, 900, 'r'], ['Interlaken', ...PL.INT.slice(0, 2), 'plain', 20, 260, 'l'], ['Grindelwald', ...PL.GRI.slice(0, 2), 'city', 5, 500, 'r'],
+  ['Pfingstegg', ...PL.PFI.slice(0, 2), 'plain', 4, 22, 'r'], ['Eigergletscher', ...PL.EIG.slice(0, 2), 'plain', 4, 22, 'l'], ['Eismeer', ...PL.EIS.slice(0, 2), 'plain', 4, 18, 'r'],
+  ['Jungfraujoch', ...PL.JOCH.slice(0, 2), 'city', 4, 30, 'b', '3,454 m'], ['First', ...PL.FIRST.slice(0, 2), 'plain', 4, 22, 'l', '2,168 m'], ['Schreckfeld', ...PL.SCH.slice(0, 2), 'plain', 4, 14, 'r'],
+  ['Bachalpsee', 8.0234, 46.6695, 'water', 4, 14, 'l'], ['Kilchberg · Lindt', ...PL.LINDT.slice(0, 2), 'plain', 5, 40, 'r'], ['Zürich Airport', ...PL.ZRH.slice(0, 2), 'plain', 8, 60, 'r'],
+  ['Thunersee', 7.72, 46.71, 'water', 25, 160, 'm'], ['Brienzersee', 7.98, 46.735, 'water', 20, 120, 'm'], ['Zürichsee', 8.66, 47.27, 'water', 14, 140, 'm'],
+  ['Rhine', 7.53, 48.0, 'water', 60, 400, 'm'],
+  ['Eiger', 8.0053, 46.5776, 'peak', 4, 40, 'r', '3,967'], ['Mönch', 7.9974, 46.5585, 'peak', 4, 30, 'r', '4,107'], ['Jungfrau', 7.9626, 46.5367, 'peak', 4, 40, 'l', '4,158'],
+];
+
+/* ---------- legs: the line, day by day ---------- */
+const route = (...ks) => ks.map((k) => (typeof k === 'string' ? PL[k] : k));
+function arc(a, b, n = 72) { // great circle, longitude-interpolated in degrees
+  const r = Math.PI / 180, [l1, p1] = [a[0] * r, a[1] * r], [l2, p2] = [b[0] * r, b[1] * r];
+  const d = 2 * Math.asin(Math.sqrt(Math.sin((p2 - p1) / 2) ** 2 + Math.cos(p1) * Math.cos(p2) * Math.sin((l2 - l1) / 2) ** 2));
+  const out = [];
+  for (let i = 0; i <= n; i++) {
+    const f = i / n, A = Math.sin((1 - f) * d) / Math.sin(d), B = Math.sin(f * d) / Math.sin(d);
+    const x = A * Math.cos(p1) * Math.cos(l1) + B * Math.cos(p2) * Math.cos(l2), y = A * Math.cos(p1) * Math.sin(l1) + B * Math.cos(p2) * Math.sin(l2), z = A * Math.sin(p1) + B * Math.sin(p2);
+    const cruise = 10700 * Math.min(1, f * 7, (1 - f) * 7);
+    out.push([Math.atan2(y, x) / r, Math.atan2(z, Math.hypot(x, y)) / r, Math.max(a[2] * (1 - f) + b[2] * f, cruise)]);
+  }
+  return out;
+}
+function loops(c, dir, n = 120) { // a coaster track that leaves the park and comes back to it
+  const kmLon = 111.32 * Math.cos(c[1] * Math.PI / 180), out = [];
+  for (let i = 0; i <= n; i++) {
+    const t = i / n * Math.PI * 2;
+    const x = dir * (1.25 * (1 - Math.cos(t)) + 0.5 * (Math.cos(6 * t) - 1)), y = 1.25 * Math.sin(t) * 0.9 + 0.5 * Math.sin(6 * t);
+    out.push([c[0] + x / kmLon, c[1] + y / 111.32, c[2]]);
+  }
+  return out;
+}
+const DAYS = [
+  { c: 'var(--d-flight)', when: 'Fri–Sat · Oct 9–10' }, { c: 'var(--d-park)', when: 'Sun · Oct 11' }, { c: 'var(--d-park)', when: 'Mon · Oct 12' },
+  { c: 'var(--d-alps)', when: 'Tue · Oct 13' }, { c: 'var(--d-summit)', when: 'Wed · Oct 14' }, { c: 'var(--d-alps)', when: 'Thu · Oct 15' },
+  { c: 'var(--d-zurich)', when: 'Fri · Oct 16' }, { c: 'var(--d-flight)', when: 'Sat · Oct 17' },
+];
+// [day, mode, from-p, to-p, label, points]
+const LEGS = [
+  [1, 'flight', .02, .42, 'UA46 · Houston to Frankfurt', arc(PL.IAH, PL.FRA)],
+  [1, 'road', .55, .9, 'Private car · Frankfurt to Rust', route('FRA', [8.6, 49.86, 140], [8.64, 49.4, 110], [8.62, 49.28, 110], [8.43, 49.0, 115], [8.2, 48.84, 120], [8.06, 48.62, 140], [7.92, 48.46, 160], [7.8, 48.32, 165], 'RUST')],
+  [2, 'coaster', .1, .85, 'Europa-Park · seven coasters by lunch', loops(PL.RUST, 1)],
+  [3, 'coaster', .1, .55, 'Europa-Park, day two', loops(PL.RUST, -1)],
+  [3, 'foot', .62, .85, 'Over to Rulantica', route('RUST', [7.733, 48.259, 165], 'RUST')],
+  [4, 'road', .05, .62, 'By car · Rust to Grindelwald', route('RUST', [7.8, 47.99, 250], [7.58, 47.8, 240], [7.6, 47.56, 260], [7.73, 47.48, 330], [7.83, 47.37, 450], [7.69, 47.26, 460], [7.58, 47.08, 500], 'BERN', 'THUN', 'SPZ', [7.776, 46.654, 570], [7.86, 46.68, 568], [7.87, 46.665, 584], [7.9, 46.63, 650], [7.95, 46.637, 800], 'GRI')],
+  [4, 'lift', .74, .92, 'Cable car · up to Pfingstegg', route('GRI', 'PFV', 'PFI')],
+  [5, 'lift', .06, .32, 'Eiger Express · Terminal to Eigergletscher', route('GRI', 'TER', 'EIG')],
+  [5, 'tunnel', .34, .6, 'Jungfrau Railway · through the Eiger', route('EIG', [7.99, 46.572, 2800], 'EIS', [7.993, 46.553, 3300], 'JOCH')],
+  [5, 'lift', .78, .94, 'Back down · pool at the Sportzentrum', route('JOCH', 'EIG', 'TER', 'GRI')],
+  [6, 'lift', .04, .24, 'Gondola · Grindelwald to First', route('GRI', 'FIV', 'BORT', 'SCH', 'FIRST')],
+  [6, 'foot', .3, .5, 'Hike toward Bachalpsee and back', route('FIRST', [8.048, 46.663, 2210], 'HIKE', [8.048, 46.6625, 2200], 'FIRST')],
+  [6, 'zip', .56, .7, 'First Flyer · First to Schreckfeld', route('FIRST', 'SCH')],
+  [6, 'lift', .78, .92, 'Gondola down for fondue', route('SCH', 'BORT', 'FIV', 'GRI')],
+  [7, 'rail', .04, .6, 'Train · Grindelwald to Zürich', route('GRI', [7.95, 46.637, 800], [7.9, 46.63, 650], [7.87, 46.665, 584], 'INT', [7.851, 46.682, 566], [7.776, 46.656, 570], 'SPZ', 'THUN', 'BERN', [7.886, 47.304, 410], [7.9077, 47.3518, 400], [8.0516, 47.391, 380], [8.17, 47.39, 400], 'ZHB')],
+  [7, 'road', .7, .9, 'Tram and bus · out to Lindt', route('ZHB', [8.5413, 47.3667, 410], [8.545, 47.343, 420], 'LINDT')],
+  [8, 'rail', .03, .12, 'Train to Zürich Airport', route('ZHB', 'ZRH')],
+  [8, 'flight', .16, .34, 'UA9051 · Zürich to Frankfurt', arc(PL.ZRH, PL.FRA, 24)],
+  [8, 'flight', .4, .92, 'UA47 · Frankfurt to Houston', arc(PL.FRA, PL.IAH)],
+].map(([day, mode, a, b, label, pts]) => {
+  const xy = pts.map((p) => P(p[0], p[1])), cum = [0];
+  for (let i = 1; i < xy.length; i++) cum.push(cum[i - 1] + Math.hypot(xy[i][0] - xy[i - 1][0], xy[i][1] - xy[i - 1][1]));
+  return { day, mode, a, b, label, pts, xy, cum, len: cum[cum.length - 1] };
+});
+
+/* camera keyframes: [section, p, lon, lat, spanKm]; section 0 = intro, 9 = finale */
+const CAM = [
+  [0, 0, -47, 42, 11000],
+  [1, 0, -47, 42, 11000], [1, .4, 8.3, 49.6, 900], [1, .52, 8.15, 49.15, 330], [1, .95, 8.0, 49.0, 300],
+  [2, .05, 7.73, 48.27, 14], [3, .9, 7.74, 48.27, 14],
+  [4, 0, 7.75, 48.0, 160], [4, .3, 7.62, 47.35, 260], [4, .6, 7.85, 46.72, 70], [4, .72, 8.04, 46.615, 7], [4, 1, 8.04, 46.615, 7],
+  [5, .05, 8.0, 46.59, 11], [5, .65, 7.995, 46.575, 9.5], [5, 1, 8.01, 46.6, 12],
+  [6, .05, 8.045, 46.645, 7.5], [6, .95, 8.048, 46.643, 7.5],
+  [7, 0, 8.0, 46.65, 20], [7, .15, 7.75, 46.95, 150], [7, .55, 8.25, 47.25, 110], [7, .68, 8.6, 47.35, 38], [7, 1, 8.6, 47.35, 38],
+  [8, 0, 8.55, 47.42, 22], [8, .2, 8.6, 48.75, 380], [8, .38, 8.4, 49.5, 600], [8, .92, -47, 42, 11000],
+  [9, .3, -47, 42, 11000], [9, .75, 7.9, 48.2, 520],
+];
+
+/* ---------- story content (from germany.jconstant.com) ---------- */
+const STORY = [
+  { n: 1, title: 'Houston to Europa-Park', tl: [['Fri evening', 'Overnight flight', 'Houston to Frankfurt', 1], ['Saturday', 'Private car', 'Frankfurt to Europa-Park, Rust']],
+    text: ['Made it to Germany! Overnight flight from Houston to Frankfurt where Ricky and I actually got some sleep, then a car ride down to Europa-Park. We spent the afternoon exploring the hotel, which has a giant sea monster skeleton hanging in the atrium and a polar bear in the hallway, before dinner.'], photos: 14, video: true, pc: 4, place: 'FRA' },
+  { n: 2, title: 'Europa-Park', tl: [['Morning', 'Roller coasters', 'Blue Fire, Wodan, Silver Star, Euro-Mir, Matterhorn-Blitz, Voltron, Pegasus', 1], ['Afternoon', "Surpr'Ice ice show", 'Europa-Park', 1], ['Afternoon', 'Voletarium and Poseidon', 'Europa-Park']],
+    text: ['Full day at Europa-Park. We rode Blue Fire, Wodan, Silver Star, Euro-Mir, Matterhorn-Blitz, Voltron and Pegasus before lunch, and Silver Star was really good, though Cora sat that one out because it went up too high. After lunch we saw the vampire ice show, then Ricky talked us into the Voletarium and Poseidon before we took the park train out and the shuttle back to the hotel around 3. Everybody was tired.'], photos: 10, video: true, pc: 2, place: 'RUST' },
+  { n: 3, title: 'Europa-Park, day two', tl: [['Morning', 'Rides and the park train', 'Europa-Park'], ['Afternoon', 'Water park and VR snorkeling', 'Rulantica', 1]],
+    text: ['Second day at Europa-Park. We took the shuttle over early, and covered all the rides by mid morning. In the afternoon we switched to Rulantica, the indoor water park, where the kids tried VR snorkeling and did even more rides. We finished with a fancy dinner.'], photos: 15, video: true, pc: 10, place: 'RUST' },
+  { n: 4, title: 'Hello, Alps', tl: [['Morning', 'Drive to Switzerland', 'Rust to Grindelwald', 1], ['Afternoon', 'Cable car', 'Grindelwald to Pfingstegg'], ['Afternoon', 'Mountain toboggan', 'Pfingstegg', 1], ['Afternoon', 'Fly-Line zipline', 'Pfingstegg', 1]],
+    text: ['A car drove us from Europa-Park to Grindelwald in the Swiss Alps this morning, and we finally got our first look at the snowy peaks. In the afternoon we took the cable car up to Pfingstegg and did the mountain toboggan and the Fly-Line zipline at the top. The kids also found a rope swing and a playground zip line. We finished the afternoon in bathrobes back at the hotel.'], photos: 12, video: true, pc: 9, place: 'PFI' },
+  { n: 5, title: 'Jungfraujoch', tl: [['8:45 AM', 'Eiger Express gondola', 'Grindelwald Terminal to Eigergletscher'], ['Morning', 'Jungfrau Railway', 'Eigergletscher to Jungfraujoch, with a stop at Eismeer'], ['Morning', 'Snow and the Ice Palace', 'Jungfraujoch, Top of Europe', 1], ['Afternoon', 'Indoor swimming', 'Sportzentrum Grindelwald']],
+    text: ['Great day up at the Jungfraujoch, the Top of Europe. We took the Eiger Express gondola up from Grindelwald, then the train through the mountain with a quick stop at the Eismeer windows, and the kids played in the snow at the top making snowballs and snow angels. We also walked through the Ice Palace and got a new cap for Cora.', 'In the afternoon we swam in the indoor pool at the Sportzentrum in the village, then had room service for dinner at the hotel.'], photos: 21, video: true, pc: 13, place: 'JOCH' },
+  { n: 6, title: 'First', tl: [['Morning', 'Gondola', 'Grindelwald to First'], ['Morning', 'Cliff Walk', 'First', 1], ['Late morning', 'Hike toward Bachalpsee', 'First'], ['Midday', 'First Flyer', 'First to Schreckfeld'], ['Early afternoon', 'First Glider', 'First', 1], ['Evening', 'Fondue dinner', 'Grindelwald']],
+    text: ["Big day up at First. We took the gondola up and did the Cliff Walk, but skipped the line out to the very edge because it was really long. Then we hiked about a mile toward Bachalpsee before the kids got tired and we turned back, had lunch at the top, and did the First Flyer (Ricky's pick, which looks scary but was a lot of fun) and the First Glider, which was awesome.", 'Back at the hotel we rested, then hit the pool and had fondue for dinner.'], photos: 23, video: true, pc: 9, place: 'FIRST' },
+  { n: 7, title: 'Train to Zürich, then chocolate', tl: [['Morning', 'Train to Zürich', 'Grindelwald to Zürich'], ['3:15 PM', 'Tram and bus', 'Zürich to Kilchberg'], ['3:30 PM', 'Lindt Home of Chocolate', 'Kilchberg', 1]],
+    text: ['Last travel day! We took the train from Grindelwald to Zürich this morning and all the train went great. After lunch at the hotel, we took the tram and a bus out to the Lindt Home of Chocolate. The kids absolutely loved it and came out completely full of chocolate.', 'Everyone was tired and we still had to pack for the flight home, so we ordered in for dinner.'], photos: 12, video: true, pc: 12, place: 'LINDT' },
+  { n: 8, title: 'Fly home', tl: [['Morning', 'Flight to Frankfurt', 'Zürich Airport to Frankfurt'], ['Midday', 'Connection', 'Frankfurt Airport'], ['Afternoon', 'Long United flight home', 'Frankfurt to Houston', 1], ['Evening', 'Landing and passport control', 'Houston Bush Intercontinental Airport', 1]],
+    text: ['Travel day home. Quick flight back to Frankfurt and a very long (10+ hours!) flight back to Houston. Happy to be home.'], photos: 3, video: false, pc: 3, place: 'FRA' },
+];
+const STOPS = [['Oct 9', 'var(--d-flight)', 'Houston', 'IAH'], ['Oct 10', 'var(--d-park)', 'Europa-Park', 'Rust, Germany'], ['Oct 13', 'var(--d-alps)', 'Grindelwald', 'Bernese Oberland'],
+  ['Oct 14', 'var(--d-summit)', 'Jungfraujoch', '3,454 m'], ['Oct 16', 'var(--d-zurich)', 'Zürich', 'and Lindt'], ['Oct 17', 'var(--d-flight)', 'Home', 'via Frankfurt']];
+
+/* ---------- build the story DOM ---------- */
+const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+const main = document.getElementById('story');
+const PHOTOS = []; // flat list for the lightbox
+let html = `<section class="intro" data-sec="0"><div class="card">
+  <div class="eyebrow">A trip journal · October 9 – 17, 2026</div>
+  <h1>Germany &amp; Switzerland<em>Eight days, one line</em></h1>
+  <p class="lede">Houston to the Top of Europe and home again. Scroll down and the line on the map follows us, day by day.</p>
+  <ul class="stops">${STOPS.map(([d, c, a, b]) => `<li><small>${d}</small><i style="background:${c}"></i><span>${a} <small>${b}</small></span></li>`).join('')}</ul>
+  <div class="cue"><svg width="12" height="14" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 1v11M1.5 8 6 12.5 10.5 8"/></svg>Scroll to start the line</div>
+</div></section>`;
+for (const d of STORY) {
+  const c = DAYS[d.n - 1].c;
+  const imgs = [];
+  for (let i = 1; i <= d.photos; i++) { imgs.push({ src: `media/d${d.n}/img${i}.jpg`, day: d.n, i, of: d.photos }); }
+  const start = PHOTOS.length; PHOTOS.push(...imgs);
+  html += `<section class="day" data-sec="${d.n}" style="--c:${c}"><article class="card">
+    <div class="day-head"><span class="badge">Day ${d.n}</span><span class="date">${DAYS[d.n - 1].when}</span></div>
+    <h2>${esc(d.title)}</h2>
+    <ol class="tl">${d.tl.map(([t, w, where, hi]) => `<li class="${hi ? 'hi' : ''}"><time>${t}</time><span><strong>${esc(w)}</strong> <span class="where">${esc(where)}</span></span></li>`).join('')}</ol>
+    ${d.text.map((p) => `<p class="entry">${esc(p)}</p>`).join('')}
+    ${d.video ? `<div class="vid"><video playsinline preload="none" poster="media/day${d.n}.jpg"><source src="media/day${d.n}.mp4" type="video/mp4"></video><button type="button" class="play" aria-label="Play the Day ${d.n} video"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg><span>Play video</span></button></div>` : ''}
+    <p class="count">${d.photos} photos</p>
+    <div class="grid">${imgs.map((im, k) => `<button type="button" data-k="${start + k}" style="--i:${k % 9}" aria-label="Day ${d.n} photo ${k + 1}"><img src="media/d${d.n}/t/img${im.i}.jpg" alt="" loading="lazy" decoding="async"></button>`).join('')}</div>
+  </article></section>`;
+}
+html += `<section class="day finale" data-sec="9"><div class="card">
+  <div class="day-head"><span class="badge" style="--c:var(--ink)">Home</span><span class="date">Sat · Oct 17, 5:50 PM CDT</span></div>
+  <h2>The whole line</h2>
+  <div class="stats" id="stats"></div>
+  <p class="note">Distances are measured along the line drawn on this map, which follows the roads, rails and lifts through their main waypoints, so they are close but not exact.</p>
+</div></section>`;
+main.innerHTML = html;
+
+/* ---------- stats from the legs ---------- */
+let TOTAL_KM = 0;
+(function stats() {
+  const hav = (a, b) => { const r = Math.PI / 180, dp = (b[1] - a[1]) * r, dl = (b[0] - a[0]) * r;
+    return 12742 * Math.asin(Math.sqrt(Math.sin(dp / 2) ** 2 + Math.cos(a[1] * r) * Math.cos(b[1] * r) * Math.sin(dl / 2) ** 2)); };
+  const km = {};
+  for (const L of LEGS) { let s = 0; for (let i = 1; i < L.pts.length; i++) s += hav(L.pts[i - 1], L.pts[i]);
+    const g = { flight: 'Flown', road: 'By car, tram and bus', rail: 'By train', tunnel: 'By train', lift: 'Up and down by cable', zip: 'Up and down by cable', foot: 'On foot', coaster: 'On foot' }[L.mode];
+    if (L.mode !== 'coaster') km[g] = (km[g] || 0) + s; }
+  TOTAL_KM = Math.round(Object.values(km).reduce((a, b) => a + b, 0) / 100) * 100;
+  const f = (n) => n >= 100 ? Math.round(n).toLocaleString('en-US') : n.toFixed(1);
+  const cells = [['Flown', km['Flown']], ['By car, tram and bus', km['By car, tram and bus']], ['By train', km['By train']], ['Up and down by cable', km['Up and down by cable']]];
+  document.getElementById('stats').innerHTML = cells.map(([k, v]) => `<div><b>${f(v)} km</b><small>${k}</small></div>`).join('') +
+    `<div><b>3,454 m</b><small>Highest point · Jungfraujoch</small></div><div><b>${PHOTOS.length}</b><small>Photos, plus 7 day videos</small></div>`;
+})();
+
+/* ---------- map rendering ---------- */
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d'), ov = document.getElementById('ov');
+const mapEl = document.getElementById('map');
+const PATHS = { land: new Path2D(GEO.land50), b50: new Path2D(GEO.borders50), b10: new Path2D(GEO.borders10), lakes: new Path2D(GEO.lakes), rivers: new Path2D(GEO.rivers) };
+const CONTOURS = GEO.contours.map((c) => ({ e: c.e, p: new Path2D(c.d) }));
+// decoded off the main thread up front; a plain <img> drawn to canvas decodes synchronously on first use (~110 ms at 4x CPU)
+const RELIEF = GEO.relief.map((r) => { const o = { ...r, im: null }; const im = new Image(); im.src = r.src;
+  im.decode().then(() => createImageBitmap(im)).then((b) => { o.im = b; dirty = true; }).catch(() => {}); return o; });
+let W = 0, H = 0, dpr = 1, focus = { x: 0, y: 0, d: 1 }, colors = {}, phone = false;
+function readColors() {
+  const cs = getComputedStyle(document.documentElement), g = (n) => cs.getPropertyValue(n).trim();
+  colors = { paper: g('--paper'), land: g('--land'), water: g('--water'), border: g('--border-line'), river: g('--river'), contour: g('--contour'), ink: g('--ink'),
+    dark: matchMedia('(prefers-color-scheme: dark)').matches && document.documentElement.dataset.theme !== 'light' || document.documentElement.dataset.theme === 'dark' };
+  dirty = true;
+}
+function resize() {
+  const r = mapEl.getBoundingClientRect(); W = r.width; H = r.height; dpr = Math.min(2, devicePixelRatio || 1);
+  cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+  phone = innerWidth <= 760;
+  const colRight = phone ? 0 : main.getBoundingClientRect().right;
+  const fw = W - colRight;
+  focus = { x: colRight + fw / 2, y: phone ? H * 0.56 : H / 2, d: Math.min(fw, phone ? H * 0.8 : H) };
+  layout(); dirty = true;
+}
+
+/* scroll geometry: sections -> pixel positions */
+let SEC = [], readLine = 0;
+function layout() {
+  readLine = innerHeight * (phone ? 0.75 : 0.62);
+  SEC = [...main.querySelectorAll('section')].map((el) => {
+    const card = el.querySelector('.card'); const top = card.getBoundingClientRect().top + scrollY;
+    // draw while the card is being read: from its top reaching the read line to its bottom reaching it
+    return { n: +el.dataset.sec, top: top - readLine * 0.55, h: card.offsetHeight + readLine * 0.3 };
+  });
+  SEC[0].top = 0; SEC[0].h = Math.max(1, SEC[1].top);
+  CAMS = CAM.map(([s, p, lon, lat, span]) => ({ at: pos(s, p), xy: P(lon, lat), lat, span }));
+  for (const L of LEGS) { L.s0 = pos(L.day, L.a); L.s1 = pos(L.day, L.b); }
+}
+const pos = (n, p) => { const S = SEC.find((x) => x.n === n); return S.top + p * S.h; };
+let CAMS = [];
+const smooth = (t) => t * t * (3 - 2 * t);
+function camera(s) {
+  if (s <= CAMS[0].at) return CAMS[0];
+  for (let i = 1; i < CAMS.length; i++) {
+    const a = CAMS[i - 1], b = CAMS[i];
+    if (s <= b.at) {
+      const t = smooth((s - a.at) / Math.max(1, b.at - a.at));
+      const span = a.span * Math.pow(b.span / a.span, t);
+      const g = Math.abs(a.span - b.span) < 1e-6 ? t : (a.span - span) / (a.span - b.span); // centre leads a zoom-in, trails a zoom-out
+      return { xy: [a.xy[0] + (b.xy[0] - a.xy[0]) * g, a.xy[1] + (b.xy[1] - a.xy[1]) * g], lat: a.lat + (b.lat - a.lat) * g, span };
     }
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') { lb.classList.remove('open'); lbImg.src = ''; }
-  });
+  }
+  return CAMS[CAMS.length - 1];
+}
 
+const SVGNS = 'http://www.w3.org/2000/svg';
+const STYLE = {
+  flight: [{ w: 2.4, dash: '7 6' }], road: [{ w: 6.5, casing: 1 }, { w: 3.4 }], rail: [{ w: 5 }, { w: 2, dash: '5 5', white: 1 }],
+  tunnel: [{ w: 3, dash: '0.1 5.5', cap: 'round' }], lift: [{ w: 2 }], foot: [{ w: 2.6, dash: '0.1 4.5', cap: 'round' }],
+  zip: [{ w: 2, dash: '11 3 2 3' }], coaster: [{ w: 6, casing: 1 }, { w: 2.8 }],
+};
+const legend = [['flight', 'Flight'], ['road', 'Car, tram, bus'], ['rail', 'Train'], ['tunnel', 'In the tunnel'], ['lift', 'Cable car, gondola'], ['zip', 'Zipline'], ['foot', 'On foot']];
+document.getElementById('legend').innerHTML = legend.map(([m, t]) => `<span><svg viewBox="0 0 30 8">${STYLE[m].map((st) => `<path d="M1 4H29" fill="none" stroke="${st.casing ? 'var(--casing)' : st.white ? 'var(--land)' : 'var(--ink-2)'}" stroke-width="${st.w * 0.8}" ${st.dash ? `stroke-dasharray="${st.dash}"` : ''} stroke-linecap="${st.cap || 'butt'}"/>`).join('')}</svg>${t}</span>`).join('');
+
+function cam2screen(c) {
+  const k = focus.d / (c.span * 1000 / metersPerUnit(c.lat)); // px per unit
+  return { k, ox: focus.x - c.xy[0] * k, oy: focus.y - c.xy[1] * k };
+}
+
+function drawMap(c, T) {
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.fillStyle = colors.paper; ctx.fillRect(0, 0, cv.width, cv.height);
+  ctx.setTransform(dpr * T.k, 0, 0, dpr * T.k, dpr * T.ox, dpr * T.oy);
+  const px = 1 / T.k;
+  ctx.fillStyle = colors.land; ctx.fill(PATHS.land);
+  // relief, each tier fades in as the camera closes in on it
+  // [gone below, full from, full to, gone above] in km of span
+  const tiers = { region: [22, 60, 700, 2400], oberland: [16, 32, 60, 170], jungfrau: [0, 0, 16, 34] };
+  const ramp = (v, a, b) => v <= a ? 0 : v >= b ? 1 : Math.log(v / a) / Math.log(b / a);
+  for (const r of RELIEF) {
+    if (!r.im) continue;
+    const [g0, f0, f1, g1] = tiers[r.name];
+    const a = Math.min(g0 ? ramp(c.span, g0, f0) : 1, 1 - ramp(c.span, f1, g1));
+    if (a <= 0.01) continue;
+    ctx.globalAlpha = a * (colors.dark ? (r.name === 'jungfrau' ? 0.3 : 0.7) : r.name === 'region' ? 0.8 : 0.95); ctx.drawImage(r.im, r.x, r.y, r.w, r.h);
+  }
+  // contours every 100 m, index lines every 500 m, only in the Jungfrau close-up
+  const ca = 1 - ramp(c.span, 14, 34);
+  if (ca > 0.01) {
+    ctx.strokeStyle = colors.contour;
+    for (const k of CONTOURS) { const idx = k.e % 500 === 0; ctx.globalAlpha = ca * (idx ? 0.85 : 0.45); ctx.lineWidth = (idx ? 1.1 : 0.6) * px; ctx.stroke(k.p); }
+  }
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = colors.water; ctx.fill(PATHS.lakes);
+  if (c.span < 900) { ctx.strokeStyle = colors.river; ctx.lineWidth = 1.3 * px; ctx.globalAlpha = Math.min(1, (900 - c.span) / 400); ctx.stroke(PATHS.rivers); ctx.globalAlpha = 1; }
+  ctx.strokeStyle = colors.border; ctx.setLineDash([5 * px, 3 * px]); ctx.lineWidth = 1.1 * px;
+  const near = c.span < 1600 ? 1 : 0;
+  ctx.stroke(near ? PATHS.b10 : PATHS.b50); ctx.setLineDash([]);
+}
+
+function partial(L, f, T) { // screen-space points of the first f of a leg
+  const target = L.len * f, out = [];
+  for (let i = 0; i < L.xy.length; i++) {
+    if (L.cum[i] <= target) { out.push(L.xy[i]); continue; }
+    const a = L.xy[i - 1], b = L.xy[i], u = (target - L.cum[i - 1]) / (L.cum[i] - L.cum[i - 1]);
+    out.push([a[0] + (b[0] - a[0]) * u, a[1] + (b[1] - a[1]) * u]); break;
+  }
+  return out.map(([x, y]) => [x * T.k + T.ox, y * T.k + T.oy]);
+}
+/* Clip a screen-space polyline to the viewport (plus a margin) before it becomes SVG. Zoomed in on the
+   Alps, a transatlantic arc is millions of pixels long, and Chrome rasterises every dash of it each frame;
+   that, not the map, was the jerk. The dash offset keeps the visible dashes where they would have been. */
+const CLIP = 60;
+function clipSeg(a, b) { // Liang-Barsky against the padded viewport; returns [t0, t1] or null
+  let t0 = 0, t1 = 1; const dx = b[0] - a[0], dy = b[1] - a[1];
+  const q = [[-dx, a[0] + CLIP], [dx, W + CLIP - a[0]], [-dy, a[1] + CLIP], [dy, H + CLIP - a[1]]];
+  for (const [p, r] of q) {
+    if (p === 0) { if (r < 0) return null; continue; }
+    const t = r / p;
+    if (p < 0) { if (t > t1) return null; if (t > t0) t0 = t; } else { if (t < t0) return null; if (t < t1) t1 = t; }
+  }
+  return [t0, t1];
+}
+function dstr(pts) {
+  if (pts.length < 2) return { d: '', off: 0 };
+  let d = '', run = false, off = -1, walked = 0;
+  for (let i = 1; i < pts.length; i++) {
+    const a = pts[i - 1], b = pts[i], len = Math.hypot(b[0] - a[0], b[1] - a[1]), c = clipSeg(a, b);
+    if (c) {
+      const at = (t) => (a[0] + (b[0] - a[0]) * t).toFixed(1) + ' ' + (a[1] + (b[1] - a[1]) * t).toFixed(1);
+      if (!run || c[0] > 0) { d += 'M' + at(c[0]); if (off < 0) off = walked + len * c[0]; }
+      d += 'L' + at(c[1]); run = c[1] === 1;
+    } else run = false;
+    walked += len;
+  }
+  return { d, off: off < 0 ? 0 : off };
+}
+
+/* The overlay is built once and only its attributes change per frame; rebuilding it as an
+   HTML string every frame cost a parse, a style pass and a layout on each scroll tick. */
+let tipInfo = null;
+const sv = (tag, attrs, parent = ov) => { const e = document.createElementNS(SVGNS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+const put = (e, k, v) => { if (e['_' + k] !== v) { e['_' + k] = v; e.setAttribute(k, v); } };
+const OV = (() => {
+  // the ghost of the whole trip, so you can see where the line is headed
+  const ghosts = LEGS.map(() => sv('path', { fill: 'none', stroke: 'var(--ink-3)', 'stroke-opacity': '.35', 'stroke-width': '1.2', 'stroke-dasharray': '2 4' }));
+  const legs = LEGS.map((L) => {
+    const col = DAYS[L.day - 1].c, g = sv('g', { display: 'none' });
+    const strokes = STYLE[L.mode].map((st) => sv('path', { fill: 'none', stroke: st.casing ? 'var(--casing)' : st.white ? 'var(--land)' : col, 'stroke-width': st.w,
+      ...(st.dash ? { 'stroke-dasharray': st.dash } : {}), 'stroke-linecap': st.cap || 'round', 'stroke-linejoin': 'round' }, g));
+    const stations = L.mode === 'lift' || L.mode === 'zip' ? sv('path', { fill: 'var(--land)', stroke: col, 'stroke-width': '1.6' }, g) : null;
+    return { g, strokes, stations };
+  });
+  const labels = LABELS.map(([t, lon, lat, cls, mn, mx, anc, sub]) => {
+    const g = sv('g', { display: 'none' });
+    let dx = 0, dy = 4, ta = 'middle';
+    if (anc === 'r') { dx = 9; ta = 'start'; } else if (anc === 'l') { dx = -9; ta = 'end'; } else if (anc === 'b') { dy = 20; }
+    let dot = null;
+    if (cls === 'peak') sv('path', { class: 'peakmark', d: 'M-5 4L0 -5L5 4Z' }, g);
+    else if (cls !== 'country' && cls !== 'water') dot = sv('circle', { class: 'dot', r: cls === 'city' ? 4.2 : 3.2 }, g);
+    const tx = sv('text', { class: 'lbl ' + cls, x: dx, y: dy, 'text-anchor': ta }, g); tx.textContent = t;
+    if (sub) { tx.append(' '); sv('tspan', { class: 'elev' }, tx).textContent = sub; }
+    return { g, dot, xy: P(lon, lat), t, lon, lat, mn, mx };
+  });
+  const ring = sv('circle', { r: 9, class: 'tip-ring', display: 'none' }), tip = sv('circle', { r: 5, stroke: 'var(--casing)', 'stroke-width': 2, display: 'none' });
+  return { ghosts, legs, labels, ring, tip };
+})();
+function drawOverlay(c, s, T) {
+  LEGS.forEach((L, j) => { const g = dstr(partial(L, 1, T)); put(OV.ghosts[j], 'd', g.d || 'M0 0'); put(OV.ghosts[j], 'stroke-dashoffset', g.off.toFixed(1)); });
+  tipInfo = null;
+  LEGS.forEach((L, j) => {
+    const E = OV.legs[j], f = Math.max(0, Math.min(1, (s - L.s0) / (L.s1 - L.s0)));
+    put(E.g, 'display', f > 0 ? 'inline' : 'none');
+    if (f <= 0) return;
+    const pts = partial(L, f, T), { d, off } = dstr(pts), col = DAYS[L.day - 1].c;
+    for (const p of E.strokes) { put(p, 'd', d || 'M0 0'); put(p, 'stroke-dashoffset', off.toFixed(1)); }
+    if (E.stations) { // station squares
+      let sd = '';
+      for (let i = 0; i < L.xy.length; i++) if (L.cum[i] <= L.len * f) { const x = L.xy[i][0] * T.k + T.ox, y = L.xy[i][1] * T.k + T.oy;
+        if (x > -20 && x < W + 20 && y > -20 && y < H + 20) sd += `M${(x - 3).toFixed(1)} ${(y - 3).toFixed(1)}h6v6h-6z`; }
+      put(E.stations, 'd', sd || 'M0 0');
+    }
+    const tip = pts[pts.length - 1];
+    // elevation and position at the tip
+    const target = L.len * f; let i = 1; while (i < L.cum.length - 1 && L.cum[i] < target) i++;
+    const u = L.cum[i] === L.cum[i - 1] ? 1 : Math.min(1, (target - L.cum[i - 1]) / (L.cum[i] - L.cum[i - 1]));
+    const lerp = (k) => L.pts[i - 1][k] + (L.pts[i][k] - L.pts[i - 1][k]) * u;
+    tipInfo = { L, f, tip, col, elev: lerp(2), lon: lerp(0), lat: lerp(1) };
+  });
+  // labels and places
+  for (const Lb of OV.labels) {
+    const x = Lb.xy[0] * T.k + T.ox, y = Lb.xy[1] * T.k + T.oy;
+    const show = c.span >= Lb.mn && c.span <= Lb.mx && x >= -100 && x <= W + 100 && y >= -40 && y <= H + 40;
+    put(Lb.g, 'display', show ? 'inline' : 'none');
+    if (!show) continue;
+    put(Lb.g, 'transform', `translate(${x.toFixed(1)} ${y.toFixed(1)})`);
+    put(Lb.g, 'opacity', Math.min(1, Math.log(c.span / Lb.mn) * 4, Math.log(Lb.mx / c.span) * 4).toFixed(2));
+    if (Lb.dot) {
+      const done = LEGS.some((L) => (s - L.s0) / (L.s1 - L.s0) >= 1 && Math.abs(L.pts[L.pts.length - 1][0] - Lb.lon) < 1e-4 && Math.abs(L.pts[L.pts.length - 1][1] - Lb.lat) < 1e-4) || (Lb.t === 'Houston');
+      put(Lb.dot, 'class', done ? 'dot done' : 'dot');
+    }
+  }
+  const on = tipInfo && tipInfo.f < 1 ? 'inline' : 'none';
+  put(OV.ring, 'display', on); put(OV.tip, 'display', on);
+  if (on === 'inline') {
+    const [x, y] = tipInfo.tip.map((v) => v.toFixed(1));
+    for (const e of [OV.ring, OV.tip]) { put(e, 'cx', x); put(e, 'cy', y); }
+    put(OV.ring, 'stroke', tipInfo.col); put(OV.tip, 'fill', tipInfo.col);
+  }
+}
+
+/* HUD, scale bar and postcard */
+const hud = document.getElementById('hud'), hWhen = document.getElementById('h-when'), hWhat = document.getElementById('h-what'),
+  hElev = document.getElementById('h-elev'), hBar = document.getElementById('h-bar'), hCoord = document.getElementById('h-coord');
+const scaleEl = document.getElementById('scale'), pc = document.getElementById('pc');
+let pcDay = 0;
+// writes only what changed, so an unchanged HUD costs no style or layout work
+const txt = (el, prop, v) => { const k = '_' + prop; if (el[k] === v) return; el[k] = v;
+  if (!prop) el.textContent = v; else if (prop.startsWith('--')) el.style.setProperty(prop, v); else el.style[prop] = v; };
+function chrome(c, s, T) {
+  const cur = [...SEC].reverse().find((S) => s >= S.top) || SEC[0];
+  if (cur.n >= 1 && cur.n <= 8) {
+    const D = DAYS[cur.n - 1]; txt(hud, '--hud-c', D.c); txt(hWhen, 0, `Day ${cur.n} · ${D.when.split(' · ')[1]}`);
+  } else if (cur.n === 9) { txt(hud, '--hud-c', 'var(--ink)'); txt(hWhen, 0, 'Home · Oct 17'); }
+  else { txt(hud, '--hud-c', 'var(--ink)'); txt(hWhen, 0, 'Oct 9 – 17, 2026'); }
+  if (tipInfo && cur.n >= 1 && cur.n <= 8) {
+    const t = tipInfo; txt(hWhat, 0, t.f < 1 ? t.L.label : t.L.label.split(' · ')[0] + ' · arrived');
+    txt(hElev, 0, Math.round(t.elev).toLocaleString('en-US') + ' m');
+    txt(hBar, 'width', Math.min(100, t.elev / 110).toFixed(1) + '%');
+    txt(hCoord, 0, `${Math.abs(t.lat).toFixed(4)}° N  ${Math.abs(t.lon).toFixed(4)}° ${t.lon < 0 ? 'W' : 'E'}`);
+  } else if (cur.n === 9) { txt(hWhat, 0, `≈ ${TOTAL_KM.toLocaleString('en-US')} km door to door`); txt(hElev, 0, 'max 3,454 m'); txt(hBar, 'width', '32%'); txt(hCoord, 0, '29.9902° N  95.3414° W'); }
+  else { txt(hWhat, 0, 'Houston · Frankfurt · Alps · Zürich'); txt(hElev, 0, '–'); txt(hBar, 'width', '0'); txt(hCoord, 0, '\u00a0'); }
+  // scale bar
+  const mpp = metersPerUnit(c.lat) / T.k, maxM = 110 * mpp;
+  const nice = [10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000, 1000000, 2000000].filter((m) => m <= maxM).pop() || 10;
+  txt(scaleEl.firstChild, 'width', (nice / mpp).toFixed(0) + 'px');
+  txt(scaleEl.lastChild, 0, nice >= 1000 ? (nice / 1000).toLocaleString('en-US') + ' km' : nice + ' m');
+  // postcard for the day being read
+  const day = cur.n >= 1 && cur.n <= 8 && (s - cur.top) / cur.h > 0.08 && (s - cur.top) / cur.h < 0.97 ? cur.n : 0;
+  if (day !== pcDay) {
+    pcDay = day; pc.classList.remove('on');
+    if (day) {
+      const st = STORY[day - 1]; pc.querySelector('img').src = `media/d${day}/img${st.pc}.jpg`;
+      pc.querySelector('span').textContent = `Day ${day} · ${st.title}`; pc.style.setProperty('--rot', (day % 2 ? 2.2 : -2) + 'deg');
+      pc.dataset.k = PHOTOS.findIndex((p) => p.day === day && p.i === st.pc);
+      requestAnimationFrame(() => pc.classList.add('on'));
+    }
+  }
+}
+function placePostcard() { // lower-left of the map's open area, clear of the story column and the legend
+  const colRight = main.getBoundingClientRect().right;
+  pc.style.left = colRight + 40 + 'px'; pc.style.bottom = 70 + 'px';
+}
+
+/* frame loop: the drawn state eases toward the scroll position */
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let sNow = -1, dirty = true;
+function frame() {
+  const target = scrollY + readLine;
+  if (sNow < 0 || reduce) sNow = target; else sNow += (target - sNow) * 0.16;
+  if (Math.abs(target - sNow) < 0.5) sNow = target;
+  if (dirty || Math.abs(target - sNow) > 0.01) {
+    const c = camera(sNow), T = cam2screen(c);
+    drawMap(c, T); drawOverlay(c, sNow, T); chrome(c, sNow, T);
+    dirty = target !== sNow;
+  }
+  requestAnimationFrame(frame);
+}
+addEventListener('scroll', () => (dirty = true), { passive: true });
+addEventListener('resize', () => { resize(); placePostcard(); });
+new ResizeObserver(() => { layout(); dirty = true; }).observe(main);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', readColors);
+new MutationObserver(readColors).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+readColors(); resize(); placePostcard(); requestAnimationFrame(frame);
+
+/* photos rise in as each grid arrives; anything already on screen stays put */
+const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('go'); e.target.classList.remove('pre'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -10% 0px' });
+document.querySelectorAll('.grid').forEach((g) => { if (g.getBoundingClientRect().top > innerHeight) { g.classList.add('pre'); io.observe(g); } });
+/* videos never start on their own: the poster and a play button until the viewer asks, then normal controls.
+   One plays at a time, and one scrolled out of view pauses. */
+const vio = new IntersectionObserver((es) => es.forEach((e) => { if (!e.isIntersecting) e.target.pause(); }), { threshold: 0 });
+document.querySelectorAll('.vid video').forEach((v) => vio.observe(v));
+
+/* lightbox */
+const lb = document.getElementById('lb'), lbImg = lb.querySelector('img'), lbCap = lb.querySelector('p');
+let lbK = 0;
+function openLb(k) { lbK = (k + PHOTOS.length) % PHOTOS.length; const p = PHOTOS[lbK]; lbImg.src = p.src; lbCap.textContent = `Day ${p.day} · ${STORY[p.day - 1].title} · ${p.i} of ${p.of}`; lb.hidden = false; }
+document.addEventListener('click', (e) => {
+  const pl = e.target.closest('.vid .play');
+  if (pl) { const v = pl.parentNode.querySelector('video'); document.querySelectorAll('.vid video').forEach((o) => o !== v && o.pause());
+    pl.parentNode.classList.add('on'); v.controls = true; v.play().catch(() => {}); return; }
+  const b = e.target.closest('.grid button, .postcard'); if (b) return openLb(+b.dataset.k);
+  if (e.target.closest('.lb .prev')) return openLb(lbK - 1);
+  if (e.target.closest('.lb .next')) return openLb(lbK + 1);
+  if (e.target === lb || e.target.closest('.lb .close')) lb.hidden = true;
+});
+document.addEventListener('keydown', (e) => {
+  if (lb.hidden) return;
+  if (e.key === 'Escape') lb.hidden = true; else if (e.key === 'ArrowLeft') openLb(lbK - 1); else if (e.key === 'ArrowRight') openLb(lbK + 1);
+});
 </script>
-
 </body>
 </html>
